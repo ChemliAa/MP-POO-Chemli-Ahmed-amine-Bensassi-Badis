@@ -77,6 +77,18 @@ troisEntiers Date::dateFromStringToIntegers(string date)
 	dateEntiers.y=stoi(holder);
 	return dateEntiers;
 }
+Date::getDay()const
+{
+	return day;
+}
+Date::getMonth()const
+{
+	return month;
+}
+Date::getYear()const
+{
+	return year;
+}
 Date::Date(int d=0,int m=0,int y=0){
 	try {
 		if (!isValidDate(d,m,y))
