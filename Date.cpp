@@ -5,29 +5,7 @@
 #define minYear 1950
 #define maxYear 2100
 using namespace std;
-struct troisEntiers
-{
-   int d,m,y;
-};
-class Date{
-	private:
-		int day;
-		int month;
-		int year;
-		bool isLeapYear(int y) ;
-		bool isValidDate(int d,int m, int y) ;
-		bool isValidDateStringFormat(string date);
-		troisEntiers dateFromStringToIntegers(string date);
-	public:
-		friend ostream& operator<< (ostream& flux,const Date& dateToPrint );
-		friend Date operator++ (Date& date,int);
-		int getYear()const;
-		int getMonth()const;
-		int getDay()const;
-		Date(int d,int m,int y);
-		Date(string date);
-		void incrementDate();
-};
+#include "Date.h"
 bool Date::isLeapYear(int y)
 {
 	return (((y%100==0) && (y%400==0))|| (y%4==0));
