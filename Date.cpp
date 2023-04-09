@@ -77,15 +77,15 @@ troisEntiers Date::dateFromStringToIntegers(string date)
 	dateEntiers.y=stoi(holder);
 	return dateEntiers;
 }
-Date::getDay()const
+int Date::getDay()const
 {
 	return day;
 }
-Date::getMonth()const
+int Date::getMonth()const
 {
 	return month;
 }
-Date::getYear()const
+int Date::getYear()const
 {
 	return year;
 }
