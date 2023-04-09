@@ -90,7 +90,7 @@ Date::getYear()const
 	return year;
 }
 Date::Date(int d=0,int m=0,int y=0){
-	try {
+ 
 		if (!isValidDate(d,m,y))
 			throw runtime_error("Date invalide!");
 		else
@@ -99,10 +99,7 @@ Date::Date(int d=0,int m=0,int y=0){
 				month=m;
 				year=y;
 			}
-	}catch (const runtime_error& e)
-		{
-			cerr<<e.what()<<endl;
-		}
+ 
 
 }
 Date::Date(string date){
