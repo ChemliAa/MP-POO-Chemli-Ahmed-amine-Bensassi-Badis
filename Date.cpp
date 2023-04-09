@@ -92,14 +92,14 @@ Date::getYear()const
 Date::Date(int d=0,int m=0,int y=0){
 	try {
 		if (!isValidDate(d,m,y))
-			throw invalid_argument("Date invalide!");
+			throw runtime_error("Date invalide!");
 		else
 			{
 				day=d;
 				month=m;
 				year=y;
 			}
-	}catch (const invalid_argument& e)
+	}catch (const runtime_error& e)
 		{
 			cerr<<e.what()<<endl;
 		}
@@ -117,7 +117,7 @@ Date::Date(string date){
 				 y=dateEntiers.y;
 			}
 		if (!isValidDate(d,m,y))
-			throw invalid_argument("Date invalide!");
+			throw runtime_error("Date invalide!");
 		else
 			{
 				day=d;
