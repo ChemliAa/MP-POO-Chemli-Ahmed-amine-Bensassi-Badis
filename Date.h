@@ -2,6 +2,8 @@
 #include <cstring>
 #include <iostream>
 #include <stdexcept>
+#define minYear 1950
+#define maxYear 2100
 using namespace std;
 struct troisEntiers
 {

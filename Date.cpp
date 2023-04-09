@@ -2,8 +2,7 @@
 #include <cstring>
 #include <iostream>
 #include <stdexcept>
-#define minYear 1950
-#define maxYear 2100
+ 
 using namespace std;
 #include "Date.h"
 bool Date::isLeapYear(int y)
@@ -167,11 +166,4 @@ ostream& operator<< (ostream& flux,const Date& dateToPrint )
 	flux<<dateToPrint.day<<"/"<<dateToPrint.month<<"/"<<dateToPrint.year;
 	return flux;
 }
-int main()
-{
-	Date date("28/2/2001");
-    cout<<date<<endl;
-	date.incrementDate();
-    cout<<date<<endl;
-    cout<<date++<<endl;
-}
+ 
