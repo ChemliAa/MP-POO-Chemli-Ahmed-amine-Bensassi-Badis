@@ -1,10 +1,6 @@
-#include <string>
-#include <cstring>
-#include <iostream>
-#include <stdexcept>
- 
-using namespace std;
 #include "Date.h"
+using namespace std;
+
 bool Date::isLeapYear(int y)
 {
 	return (((y%100==0) && (y%400==0))|| (y%4==0));
@@ -160,10 +156,36 @@ Date operator++ (Date& date,int)
     else date.day++;
     return date;
 }
+bool  operator== (const Date& date1,const Date& date2)
+{
+	return (date1.day==date2.day && date1.month==date2.month && date1.year==date2.year);
+}
+bool operator<(const Date& date1,const Date& date2)
+{
+	if (date1.year!=date2.year) return (date1.year<date2.year); 
+	if (date1.month!=date2.month) return (date1.month<date2.month); 
+	return (date1.day<date2.day); 
+}
 
 ostream& operator<< (ostream& flux,const Date& dateToPrint )
 {
 	flux<<dateToPrint.day<<"/"<<dateToPrint.month<<"/"<<dateToPrint.year;
 	return flux;
 }
- 
+istream& operator>> (istream& flux, Date& dateToInput )
+{
+	char tab[100];
+	flux.getline(tab,100,'/');
+	int d=atoi(tab);
+	flux.getline(tab,100,'/');
+	int m=atoi(tab);
+	flux.getline(tab,100,';');
+	int y=atoi(tab);
+	if (!Date::isValidDate(d,m,y)) {
+		throw runtime_error("Date invalide!");
+	}
+	dateToInput.day=d;
+	dateToInput.month=m;
+	dateToInput.year=y;
+
+}
