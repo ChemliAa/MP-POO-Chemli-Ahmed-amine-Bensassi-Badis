@@ -22,17 +22,4 @@ vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
         }
     return PrixJournaliersDansDate;    
  }
- int main(){
-    Date d("20/10/2015");
-    Date d1("10/05/2010");
-    BourseVector bourse(d);
-    vector<PrixJournalier> PrixJournaliertoOuput=bourse.getPrixJournaliersParDate(d1);
-    vector<string> nomActiontoOuput=bourse.getActionsDisponiblesParDate(d1);
-
-    for (int i = 0; i < PrixJournaliertoOuput.size(); i++)
-    {
-        cout<<nomActiontoOuput[i]<<":"<<PrixJournaliertoOuput[i].getPrix()<<endl;
-    }
-    
-    
- }
+  
