@@ -188,5 +188,23 @@ int main()
          cout<<"increment date on the end of the year  [failed]"<<endl; 
          cout<<"expected day=1,month=3,year=2010 got: day= "<<endOfYearDate.getDay()<<"Month= "<<endOfYearDate.getMonth()<<"year= "<<endOfYearDate.getYear()<<endl;
     }
+    //given 2 correctly initiated dates where the first date is greater than the second one, when compared,expect a correct boolean output
+    Date date1ToCompare(1,1,2010);
+    Date date2ToCompare(1,1,2020);
+    Date date3ToCompare(1,2,2010);
+    Date date4ToCompare(5,2,2010);
+    if(date1ToCompare<date2ToCompare &&  date1ToCompare<date3ToCompare  && date1ToCompare<date4ToCompare){
+        cout<<"comparaison of dates using the opeator '<' overload [passed] "<<endl;
+    }
+    else{
+        cout<<"comparaison of dates using the opeator overload [failed] "<<endl;
+    }
+    //given 2 correctly initiated dates where both have the same date, when compared,expect a correct boolean output 
+    Date date5ToCompare(1,1,2010);
+    Date date6Tocompare(1,1,2010);
+    if (date5ToCompare==date6Tocompare){
+        cout<<"comparaison of dates using the '==' operator overload [passed] "<<endl;
+    }
+    cout<<"comparaison of dates using the '==' operator overload [failed]"<<endl;
    
 }
