@@ -14,11 +14,3 @@ istream& operator>> (istream& flux, PrixJournalier& pj )
     pj.prix=p;
     return flux;
 }
-int main(){
-    PrixJournalier pj;
-    cin>>pj;
-    cout<<pj.getDate()<<endl;
-    cout<<pj.getNomAction()<<endl;
-    cout<<pj.getPrix()<<endl;
-    
-}

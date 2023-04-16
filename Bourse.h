@@ -1,10 +1,15 @@
+#if !defined(BOURSE_H)
+#define BOURSE_H
+
 #include "Date.h"
 class Bourse{
-    private:
+    protected:
     Date dateFinRech;
     public:
-    Bourse():dateFinRech("1/1/2000"){};
-    virtual ~Bourse();
-    virtual string getActionsDisponiblesParDate(Date)=0;
-    virtual double getPrixJournaliersParDate(Date)=0;
+    Bourse(Date date):dateFinRech(date){};
+    virtual ~Bourse(){};
+    Date getDateFinRech(){return dateFinRech;}
+    virtual vector<string> getActionsDisponiblesParDate(Date)=0;
+    virtual vector<PrixJournalier> getPrixJournaliersParDate(Date)=0;
 };
+#endif // BOURSE_H
