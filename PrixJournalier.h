@@ -1,3 +1,5 @@
+#ifndef PRIXJOURNALIER_H
+#define PRIXJOURNALIER_H
 #include "Date.cpp"
 class PrixJournalier
 {
@@ -12,3 +14,4 @@ public:
     string getNomAction()const;
     double getPrix()const;
 };
+#endif // PRIXJOURNALIER_H

@@ -1,3 +1,6 @@
+#ifndef DATE_H
+#define DATE_H
+
 #include <string>
 #include <cstring>
 #include <iostream>
@@ -32,3 +35,5 @@ class Date{
 		Date(string date);
 		void incrementDate();
 };
+
+#endif // DATE_H

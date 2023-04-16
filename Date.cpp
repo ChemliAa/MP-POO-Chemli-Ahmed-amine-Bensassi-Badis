@@ -1,5 +1,4 @@
 #include "Date.h"
-using namespace std;
 
 bool Date::isLeapYear(int y)
 {
@@ -187,5 +186,5 @@ istream& operator>> (istream& flux, Date& dateToInput )
 	dateToInput.day=d;
 	dateToInput.month=m;
 	dateToInput.year=y;
-
+	return flux;
 }

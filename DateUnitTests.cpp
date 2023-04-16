@@ -1,9 +1,6 @@
-#include <string>
-#include <cstring>
-#include <iostream>
-#include <stdexcept>
+#include "Date.cpp"
 using namespace std;
-#include "Date.h"
+
 int main()
 {
 	//given a declaration of a Date with 3 ints paramters following the correct Date format ,when the constructors executes, expect the attributs to have the given parameters
@@ -191,5 +188,5 @@ int main()
          cout<<"increment date on the end of the year  [failed]"<<endl; 
          cout<<"expected day=1,month=3,year=2010 got: day= "<<endOfYearDate.getDay()<<"Month= "<<endOfYearDate.getMonth()<<"year= "<<endOfYearDate.getYear()<<endl;
     }
-
+   
 }
