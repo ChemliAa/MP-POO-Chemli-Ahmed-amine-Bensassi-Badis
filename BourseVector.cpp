@@ -1,17 +1,10 @@
 #include "BourseVector.h"
-BourseVector::BourseVector(Date date,string path=CHEMIN):Bourse(date)
+BourseVector::BourseVector(const Date& date,string path):Bourse(date)
 {
     historique=PersistancePrixJournaliers::lirePrixJournaliersDUnFichier(path);
 };
-BourseVector::BourseVector(string date,string path=CHEMIN):Bourse(date)
-{
-    historique=PersistancePrixJournaliers::lirePrixJournaliersDUnFichier(path);
-};
-BourseVector::BourseVector(int d,int m,int y,string path=CHEMIN):Bourse(d,m,y)
-{
-    historique=PersistancePrixJournaliers::lirePrixJournaliersDUnFichier(path);
-};
-vector<string> BourseVector::getActionsDisponiblesParDate(Date date){
+
+vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
     vector<string> ActionsDisponibles;
     for (auto i = historique.begin(); i != historique.end(); ++i)
         if (i->getDate()==date && i->getDate()<dateFinRech)
@@ -20,7 +13,7 @@ vector<string> BourseVector::getActionsDisponiblesParDate(Date date){
         }
     return ActionsDisponibles;       
 }
- vector<PrixJournalier> BourseVector::getPrixJournaliersParDate(Date date){
+ vector<PrixJournalier> BourseVector::getPrixJournaliersParDate(const Date& date){
     vector<PrixJournalier> PrixJournaliersDansDate;
     for (auto i = historique.begin(); i != historique.end(); ++i)
         if (i->getDate()==date && i->getDate()<dateFinRech)
@@ -29,4 +22,17 @@ vector<string> BourseVector::getActionsDisponiblesParDate(Date date){
         }
     return PrixJournaliersDansDate;    
  }
- 
+ int main(){
+    Date d("20/10/2015");
+    Date d1("10/05/2010");
+    BourseVector bourse(d);
+    vector<PrixJournalier> PrixJournaliertoOuput=bourse.getPrixJournaliersParDate(d1);
+    vector<string> nomActiontoOuput=bourse.getActionsDisponiblesParDate(d1);
+
+    for (int i = 0; i < PrixJournaliertoOuput.size(); i++)
+    {
+        cout<<nomActiontoOuput[i]<<":"<<PrixJournaliertoOuput[i].getPrix()<<endl;
+    }
+    
+    
+ }
