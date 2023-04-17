@@ -2,7 +2,7 @@
 #include "PrixJournalier.cpp"
 #include "PersistancePrixJournaliers.h"
 #include <vector>
-#define CHEMIN "D:/acedemics/projetOrienteobjet/prices_simple.csv"
+#define CHEMIN "C:/Users/ahmad/Documents/Enit/P3-4/MiniProjetC++/prices_simple.csv"
 
 class  BourseVector:public Bourse
 

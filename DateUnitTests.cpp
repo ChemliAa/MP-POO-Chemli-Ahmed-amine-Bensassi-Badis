@@ -205,6 +205,6 @@ int main()
     if (date5ToCompare==date6Tocompare){
         cout<<"comparaison of dates using the '==' operator overload [passed] "<<endl;
     }
-    cout<<"comparaison of dates using the '==' operator overload [failed]"<<endl;
-   
+    else {cout<<"comparaison of dates using the '==' operator overload [failed]"<<endl;
+    }
 }
