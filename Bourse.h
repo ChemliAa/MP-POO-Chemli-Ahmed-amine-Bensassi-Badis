@@ -6,11 +6,11 @@
 #include "Date.h"
 class Bourse{
     protected:
-    Date dateFinRech;
+    Date dateCourante;
     public:
-    Bourse(const Date& date):dateFinRech(date){}
+    Bourse(const Date& date):dateCourante(date){}
     virtual ~Bourse(){};
-    Date getDateFinRech(){return dateFinRech;}
+    Date getDateFinRech(){return dateCourante;}
     virtual vector<string> getActionsDisponiblesParDate(const Date&)=0;
     virtual vector<PrixJournalier> getPrixJournaliersParDate(const Date&)=0;
 };

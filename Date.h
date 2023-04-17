@@ -18,7 +18,6 @@ class Date{
 		int month;
 		int year;
 		static bool isLeapYear(int y) ;
-		static int numberOfMonths(const Date& Date) ;
 		static bool isValidDate(int d,int m, int y) ;
 		static bool isValidDateStringFormat(string date);
 		troisEntiers dateFromStringToIntegers(string date);

@@ -16,7 +16,6 @@ int main(){
     for (int i = 0; i < PrixJournaliertoOuput.size(); i++)
     {         
         if((dateFinDeRecherche<PrixJournaliertoOuput[i].getDate()) || (d1<PrixJournaliertoOuput[i].getDate())){
-            cout<<PrixJournaliertoOuput[i].getDate()<<endl;
             conditionDateFin=false;
             break;
         }
