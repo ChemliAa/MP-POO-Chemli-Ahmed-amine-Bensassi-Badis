@@ -6,6 +6,7 @@ class  Titre
         string nomAction;
         int qtte;
     public:
+        Titre(string nomAction,int qtte);
         string getNomAction();
         int getQtte(); 
         void setNomAction(string nouveaNom);
