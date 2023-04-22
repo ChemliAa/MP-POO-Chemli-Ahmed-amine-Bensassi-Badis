@@ -4,9 +4,22 @@
 #include "PorteFeuille.h"
 #include "traderAleatoire.h"
 Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille& p){    
-    Transaction t;
+   Transaction t;
+   typeTransaction choixTypeTransaction=static_cast<typeTransaction>(rand() % 3);;
+    switch (choixTypeTransaction) {
+        case buy:
+            // logic for buying stocks
+            break;
+        case sell:
+            // logic for selling stocks
+            break;
+        case hold:
+            // logic for holding onto stocks
+            break;
+        default:
+            // error handling if the random value is out of range
+            break;
+    }
     return t;    
  }
- int main() {
-    cout<<"yo"<<endl;
- }
+ 
