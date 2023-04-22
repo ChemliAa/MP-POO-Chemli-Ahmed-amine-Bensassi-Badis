@@ -1,8 +1,6 @@
 #if !defined(PORTEFEUILLE_H)
 #define PORTEFEUILLE_H
-#include "./customExceptions/IncorrectMontantRetirer.cpp"
-#include "./customExceptions/ActionNotFound.cpp"
-#include <iostream>
+ 
 #include <vector>
 #include "Titre.h"
  
@@ -19,8 +17,8 @@ class  PorteFeuille
     public:
 
         PorteFeuille(double solde);
-        double getSolde();
-        vector<Titre*> getTitres();
+        double getSolde()const;
+        vector<Titre*> getTitres()const;
         void ajoutMontant(double montant);
         void retirerMontant(double montant);
         void ajoutTitre(Titre *titre);

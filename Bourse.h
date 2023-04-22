@@ -10,9 +10,9 @@ class Bourse{
     public:
     Bourse(const Date& date):dateCourante(date){}
     virtual ~Bourse(){};
-    Date getDateFinRech(){return dateCourante;}
+    Date getDateFinRech()const{return dateCourante;}
     virtual vector<string> getActionsDisponiblesParDate(const Date&)=0;
     virtual vector<PrixJournalier> getPrixJournaliersParDate(const Date&)=0;
-    virtual vector<PrixJournalier> getPrixJournaliersParDateEtPrix(const Date& date,double soldeCourant)=0;
+    virtual vector<PrixJournalier> getPrixJournaliersParDateEtPrix(const Date& date,double soldeCourant)const =0;
 };
 #endif // BOURSE_H

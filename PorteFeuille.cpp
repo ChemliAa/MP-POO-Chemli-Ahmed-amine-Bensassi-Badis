@@ -1,8 +1,11 @@
    
 #include "PorteFeuille.h"
+#include <vector>
+#include "./customExceptions/IncorrectMontantRetirer.cpp"
+#include "./customExceptions/ActionNotFound.cpp"
+#include <iostream>
 PorteFeuille::PorteFeuille(double solde):solde(solde){}
 void PorteFeuille::ajoutMontant(double montant){
-    
     solde+=montant;
    }
  void PorteFeuille::retirerMontant(double montant){
@@ -36,10 +39,10 @@ void PorteFeuille::ajoutTitre(Titre* t){
     titres.push_back(t);
     return ;
     }
-double PorteFeuille::getSolde(){
+double PorteFeuille::getSolde()const{
     return solde;
 }
-vector<Titre*> PorteFeuille :: getTitres(){
+vector<Titre*> PorteFeuille::getTitres()const{  
     return  titres;
 
 }

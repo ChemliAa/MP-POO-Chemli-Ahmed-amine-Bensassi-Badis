@@ -1,7 +1,6 @@
+#if !defined(BOURSEVECTOR_H)
+#define BOURSEVECTOR_H
 #include "Bourse.h"
-#include "PrixJournalier.cpp"
-#include "PersistancePrixJournaliers.h"
-#include <vector>
 #define CHEMIN "prices_simple.csv"
 
 class  BourseVector:public Bourse
@@ -13,6 +12,6 @@ public:
     BourseVector(const Date& date,string path=CHEMIN);
     vector<string> getActionsDisponiblesParDate(const Date& date)override;
     vector<PrixJournalier> getPrixJournaliersParDate(const Date& date)override;
-    vector<PrixJournalier> getPrixJournaliersParDateEtPrix(const Date& date,double prix)override;
+    vector<PrixJournalier> getPrixJournaliersParDateEtPrix(const Date& date,double prix)const override;
 };
-
+#endif

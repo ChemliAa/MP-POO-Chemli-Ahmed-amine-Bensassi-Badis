@@ -9,6 +9,7 @@ class Transaction{
     string nomAction;
     double quantite; 
     public:
+    friend ostream& operator<< (ostream& flux,const Transaction& t );     
     typeTransaction getType()const;
     string getNomAction()const;
     double getQuantite()const;

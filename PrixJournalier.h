@@ -1,6 +1,6 @@
 #ifndef PRIXJOURNALIER_H
 #define PRIXJOURNALIER_H
-#include "Date.cpp"
+#include "Date.h"
 class PrixJournalier
 {
 private:

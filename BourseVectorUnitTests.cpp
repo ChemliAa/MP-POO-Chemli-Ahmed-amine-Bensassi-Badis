@@ -1,5 +1,5 @@
 #include "PrixJournalier.h"
-#include "BourseVector.cpp"
+#include "BourseVector.h"
 #include "Date.h"     
 using namespace std;
 

@@ -8,7 +8,7 @@ class  Titre
     public:
         Titre(string nomAction,int qtte);
         string getNomAction();
-        int getQtte(); 
+        int getQtte()const; 
         void setNomAction(string nouveaNom);
         void setQtte(int nouvelleQtte);
     

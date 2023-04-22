@@ -34,7 +34,7 @@ vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
         }
     return PrixJournaliersDansDate;    
  }
- vector<PrixJournalier> BourseVector::getPrixJournaliersParDateEtPrix(const Date& date,double soldeCourant){
+ vector<PrixJournalier> BourseVector::getPrixJournaliersParDateEtPrix(const Date& date,double soldeCourant)const{
     vector<PrixJournalier> PrixJournaliersDansDate;
     if (historique[historique.size()-1].getDate()<date)//if the searched date is greater than the upper bound of the vector return empty vector (out of search range)       
             return PrixJournaliersDansDate;  
