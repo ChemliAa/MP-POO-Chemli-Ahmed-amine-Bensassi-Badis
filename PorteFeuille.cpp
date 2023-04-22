@@ -12,10 +12,6 @@ void PorteFeuille::ajoutMontant(double montant){
             }
         throw  incorrectMontantRetirer();         
     }
-
-
-
-
 int PorteFeuille::findTitreIndex(string nomAction){
     int indexOfIndexToSearch= 0;
     for (Titre* t : titres){

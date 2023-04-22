@@ -1,8 +1,12 @@
+#if !defined(PORTEFEUILLE_H)
+#define PORTEFEUILLE_H
 #include "./customExceptions/IncorrectMontantRetirer.cpp"
 #include "./customExceptions/ActionNotFound.cpp"
 #include <iostream>
 #include <vector>
 #include "Titre.h"
+ 
+
 class  PorteFeuille
 {
     private:
@@ -13,11 +17,11 @@ class  PorteFeuille
         int findTitreIndex(string nomAction);
 
     public:
-        PorteFeuille::PorteFeuille(double solde);
+        PorteFeuille(double solde);
         void ajoutMontant(double montant);
         void retirerMontant(double montant);
         void ajoutTitre(Titre *titre);
         void suprimerTitre(string action);
 };
-
+#endif
 
