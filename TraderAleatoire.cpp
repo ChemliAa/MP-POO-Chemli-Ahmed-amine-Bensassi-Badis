@@ -4,6 +4,7 @@
 #include "PorteFeuille.h"
 #include <cmath>
 #include "traderAleatoire.h"
+#include "./customExceptions/TransactionUnknown.cpp"
 Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille& p){    
    Transaction t;
    typeTransaction choixTypeTransaction=static_cast<typeTransaction>(rand() % 3);
@@ -20,14 +21,18 @@ Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille&
             return t;
             break;
         case sell:
-            Titre * ownedTitres=p.getTitres();
-            
+            auto ownedTitres=p.getTitres();
+            int stockToSell=rand() % ownedTitres.size();
+            t.setNomAction=ownedTitres[stockToSell]->getNomAction();
+            int quantityToSell=rnad() % ownedTitres[stockToSell]->getQtte();
+            t.setQuantite(quantityToSell);
+            return t;
             break;
         case hold:
-            // logic for holding onto stocks
+            return t; 
             break;
         default:
-            // error handling if the random value is out of range
+            throw TransactionUnknown();
             break;
     }
     return t;    
