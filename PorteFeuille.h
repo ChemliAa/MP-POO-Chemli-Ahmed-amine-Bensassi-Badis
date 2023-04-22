@@ -17,7 +17,10 @@ class  PorteFeuille
         int findTitreIndex(string nomAction);
 
     public:
+
         PorteFeuille(double solde);
+        double getSolde();
+        vector<Titre*> getTitres();
         void ajoutMontant(double montant);
         void retirerMontant(double montant);
         void ajoutTitre(Titre *titre);

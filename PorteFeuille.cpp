@@ -36,3 +36,10 @@ void PorteFeuille::ajoutTitre(Titre* t){
     titres.push_back(t);
     return ;
     }
+double PorteFeuille::getSolde(){
+    return solde;
+}
+vector<Titre*> PorteFeuille :: getTitres(){
+    return  titres;
+
+}
