@@ -28,6 +28,21 @@ int main(){
     else {
         cout<<"extraction of 'prix journalier' before a given date [failed]"<<endl;
     }
-   
+   Date dateCourante("4/1/2010");
+   BourseVector bourse2(dateCourante);
+   vector<PrixJournalier> PrixJournalierDisponible=bourse2.getPrixJournaliersParDateEtPrix(dateCourante,10);
+   bool respectValidationConditions=true;
+    for (int i = 0; i < PrixJournalierDisponible.size(); i++)
+    {    Date stockDate=PrixJournalierDisponible[i].getDate();
+         if(!(stockDate==dateCourante && (stockDate<dateCourante || stockDate==dateCourante) && (10 >PrixJournalierDisponible[i].getPrix()))){
+            respectValidationConditions=false;
+         }
+    }
+     if(respectValidationConditions){
+        cout<<"extraction of 'prix journalier' before a given date and being below a price range [passed]"<<endl;
+    }
+    else {
+        cout<<"extraction of 'prix journalier' before a given date and being below a price range  [failed]"<<endl;
+    }
     
 }

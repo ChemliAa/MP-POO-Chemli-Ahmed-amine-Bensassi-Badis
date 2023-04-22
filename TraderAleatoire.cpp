@@ -12,16 +12,23 @@ Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille&
     switch (choixTypeTransaction) {
         case buy:
             prixJournalierDisponible=b.getPrixJournaliersParDateEtPrix(b.getDateFinRech(),p.getSolde());
+            cout<<prixJournalierDisponible.size();
             indexPrixJournalierToBuy=rand() % prixJournalierDisponible.size();
             t.setNomAction(prixJournalierDisponible[indexPrixJournalierToBuy].getNomAction());
-            maxPurchasableStocks=floor(prixJournalierDisponible[indexPrixJournalierToBuy].getPrix() / p.getSolde());
+            maxPurchasableStocks=floor(p.getSolde()/prixJournalierDisponible[indexPrixJournalierToBuy].getPrix());
             qtteToBuy=rand() % maxPurchasableStocks +1;
             t.setQuantite(qtteToBuy); //quantity should be and int not a double
             return t;
             break;
         case sell:
+            
             ownedTitres=p.getTitres();
+            if(ownedTitres.size()==0){
+                break;
+            } 
             stockToSell=rand() % ownedTitres.size();
+            cout<<ownedTitres.size();
+            cout<<stockToSell<<endl;
             t.setNomAction(ownedTitres[stockToSell]->getNomAction());
             quantityToSell=rand() % ownedTitres[stockToSell]->getQtte();
             t.setQuantite(quantityToSell);
@@ -38,12 +45,26 @@ Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille&
  }
 int main(){
     TraderAleatoire t;
-    Date datecourant("1/1/2012");
-    PorteFeuille p(2000);
+    Date datecourant("4/1/2010");
+    PorteFeuille p(10);
     BourseVector b(datecourant,CHEMIN);
     auto choix=t.choisirDecision(b,p);
     cout<<choix;
-
+    choix=t.choisirDecision(b,p);
+    cout<<choix;
+    choix=t.choisirDecision(b,p);
+    cout<<choix;
+    choix=t.choisirDecision(b,p);
+    cout<<choix;
+    choix=t.choisirDecision(b,p);
+    cout<<choix;
+     choix=t.choisirDecision(b,p);
+    cout<<choix;
+    choix=t.choisirDecision(b,p);
+    cout<<choix;
+    choix=t.choisirDecision(b,p);
+    cout<<choix;
+    choix=t.choisirDecision(b,p);
+    cout<<choix;
     
-
 }

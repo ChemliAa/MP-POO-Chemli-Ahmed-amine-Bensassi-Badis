@@ -12,7 +12,7 @@ class Bourse{
     virtual ~Bourse(){};
     Date getDateFinRech()const{return dateCourante;}
     virtual vector<string> getActionsDisponiblesParDate(const Date&)=0;
-    virtual vector<PrixJournalier> getPrixJournaliersParDate(const Date&)=0;
+    virtual vector<PrixJournalier> getPrixJournaliersParDate(const Date&)const =0;
     virtual vector<PrixJournalier> getPrixJournaliersParDateEtPrix(const Date& date,double soldeCourant)const =0;
 };
 #endif // BOURSE_H

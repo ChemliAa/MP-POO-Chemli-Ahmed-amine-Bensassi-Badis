@@ -19,15 +19,15 @@ vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
        } 
     return ActionsDisponibles;       
 }
- vector<PrixJournalier> BourseVector::getPrixJournaliersParDate(const Date& date){
+ vector<PrixJournalier> BourseVector::getPrixJournaliersParDate(const Date& date)const{
     vector<PrixJournalier> PrixJournaliersDansDate;
     if (historique[historique.size()-1].getDate()<date)//if the searched date is greater than the upper bound of the vector return empty vector (out of search range)       
             return PrixJournaliersDansDate;  
     for (auto i = historique.begin(); i != historique.end(); ++i)
-        {
+        {   
         if (date< i->getDate())//if the iterated date is greater than the searched date exit the loop       
             break;
-        if (i->getDate()==date && i->getDate()<dateCourante)
+        if (i->getDate()==date && (i->getDate()<dateCourante || i->getDate()==dateCourante ))
         {
             PrixJournaliersDansDate.push_back(*i);
         }
@@ -36,14 +36,17 @@ vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
  }
  vector<PrixJournalier> BourseVector::getPrixJournaliersParDateEtPrix(const Date& date,double soldeCourant)const{
     vector<PrixJournalier> PrixJournaliersDansDate;
+    
     if (historique[historique.size()-1].getDate()<date)//if the searched date is greater than the upper bound of the vector return empty vector (out of search range)       
             return PrixJournaliersDansDate;  
     for (auto i = historique.begin(); i != historique.end(); ++i)
-        {
-        if (date< i->getDate())//if the iterated date is greater than the searched date exit the loop       
-            break;
-        if (i->getDate()==date && i->getDate()<dateCourante && soldeCourant>i->getPrix())
-        {
+        {   
+        if (date< i->getDate()){
+            
+            break; 
+        }
+        if (i->getDate()==date && (i->getDate()<dateCourante || i->getDate()==dateCourante) && soldeCourant>i->getPrix())
+        {    
             PrixJournaliersDansDate.push_back(*i);
         }
         }
