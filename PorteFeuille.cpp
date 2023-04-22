@@ -36,3 +36,7 @@ void PorteFeuille::suprimerTitre(string nomAction){
     throw ActionNotFound();
     return ;
     }
+void PorteFeuille::ajoutTitre(Titre* t){
+    titres.push_back(t);
+    return ;
+    }
