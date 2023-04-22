@@ -2,6 +2,7 @@
 #include "PorteFeuille.h"
 PorteFeuille::PorteFeuille(double solde):solde(solde){}
 void PorteFeuille::ajoutMontant(double montant){
+    
     solde+=montant;
    }
  void PorteFeuille::retirerMontant(double montant){
@@ -16,9 +17,22 @@ void PorteFeuille::ajoutMontant(double montant){
 
 
 int PorteFeuille::findTitreIndex(string nomAction){
-           return 0;   //to implement: shoudl search through the Titre , find the one correspending, and returning its index , i dont know it its usefulll for a vector, probably
+    int indexOfIndexToSearch= 0;
+    for (Titre* t : titres){
+        if(t->getNomAction()==nomAction){
+            return indexOfIndexToSearch;
+        }
+        indexOfIndexToSearch++;
+    }
+    return -1;   
     }
 void PorteFeuille::suprimerTitre(string nomAction){
-        //to implement,we should not forget to use free pointer ;will use find index most likely
-            
+    int indexOfTiTileToDelete=findTitreIndex(nomAction);
+    if(indexOfTiTileToDelete!=-1){
+        delete titres[indexOfTiTileToDelete];
+        titres.erase(titres.begin()+indexOfTiTileToDelete);
+        return;
+    }
+    throw ActionNotFound();
+    return ;
     }
