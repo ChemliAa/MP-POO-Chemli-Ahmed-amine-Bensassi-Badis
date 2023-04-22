@@ -13,5 +13,6 @@ public:
     BourseVector(const Date& date,string path=CHEMIN);
     vector<string> getActionsDisponiblesParDate(const Date& date)override;
     vector<PrixJournalier> getPrixJournaliersParDate(const Date& date)override;
+    vector<PrixJournalier> getPrixJournaliersParDateEtPrix(const Date& date,double prix);
 };
 

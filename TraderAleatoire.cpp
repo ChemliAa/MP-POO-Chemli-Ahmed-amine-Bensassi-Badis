@@ -8,7 +8,7 @@ Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille&
    typeTransaction choixTypeTransaction=static_cast<typeTransaction>(rand() % 3);;
     switch (choixTypeTransaction) {
         case buy:
-            // logic for buying stocks
+            b.getActionsDisponiblesParDate(b.getDateFinRech());
             break;
         case sell:
             // logic for selling stocks
