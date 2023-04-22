@@ -12,7 +12,10 @@ Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille&
     switch (choixTypeTransaction) {
         case buy:
             prixJournalierDisponible=b.getPrixJournaliersParDateEtPrix(b.getDateFinRech(),p.getSolde());
-            cout<<prixJournalierDisponible.size();
+             if(prixJournalierDisponible.size()==0){
+                t.setType(hold); //if theres nothing we can buy today,do nothing
+                return t;
+            } 
             indexPrixJournalierToBuy=rand() % prixJournalierDisponible.size();
             t.setNomAction(prixJournalierDisponible[indexPrixJournalierToBuy].getNomAction());
             maxPurchasableStocks=floor(p.getSolde()/prixJournalierDisponible[indexPrixJournalierToBuy].getPrix());
@@ -24,7 +27,8 @@ Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille&
             
             ownedTitres=p.getTitres();
             if(ownedTitres.size()==0){
-                break;
+                t.setType(hold); //if theres nothing to sell,do nothing
+                return t;
             } 
             stockToSell=rand() % ownedTitres.size();
             cout<<ownedTitres.size();
