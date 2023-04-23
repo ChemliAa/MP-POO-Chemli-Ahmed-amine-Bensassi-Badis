@@ -13,5 +13,7 @@ public:
     vector<string> getActionsDisponiblesParDate(const Date& date)override;
     vector<PrixJournalier> getPrixJournaliersParDate(const Date& date)const override;
     vector<PrixJournalier> getPrixJournaliersParDateEtPrix(const Date& date,double prix)const override;
+    double getPrixParDateEtAction(const Date& date,string action)const override ;
+
 };
 #endif

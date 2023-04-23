@@ -1,7 +1,6 @@
 #include <cmath>
-#include "traderAleatoire.h"
+#include "TraderAleatoire.h"
 #include "./customExceptions/TransactionUnknown.cpp"
-#include "./BourseVector.h"
 Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille& p){    
    Transaction t;
    typeTransaction choixTypeTransaction=static_cast<typeTransaction>(rand() % 3);

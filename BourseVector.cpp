@@ -52,3 +52,13 @@ vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
         }
     return PrixJournaliersDansDate;    
  }
+double BourseVector::getPrixParDateEtAction(const Date& date,string action)const
+{
+    for (auto i = historique.begin(); i != historique.end(); ++i)
+    {
+        if(i->getDate()==date && i->getNomAction()==action)
+            return i->getPrix();
+    }
+
+}
+

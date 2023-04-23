@@ -15,7 +15,7 @@ void PorteFeuille::ajoutMontant(double montant){
             }
         throw  incorrectMontantRetirer();         
     }
-int PorteFeuille::findTitreIndex(string nomAction){
+int PorteFeuille::findTitreIndex(string nomAction)const{
     int indexOfIndexToSearch= 0;
     for (Titre* t : titres){
         if(t->getNomAction()==nomAction){
@@ -36,8 +36,16 @@ void PorteFeuille::suprimerTitre(string nomAction){
     return ;
     }
 void PorteFeuille::ajoutTitre(Titre* t){
-    titres.push_back(t);
-    return ;
+    if (findTitreIndex(t->getNomAction())==-1)
+    {
+        titres.push_back(t);
+        return ;
+    }
+    else
+    {
+        titres[findTitreIndex(t->getNomAction())]->setQtte((titres[findTitreIndex(t->getNomAction())]->getQtte())+(t->getQtte()));
+    }
+    
     }
 double PorteFeuille::getSolde()const{
     return solde;
@@ -45,4 +53,8 @@ double PorteFeuille::getSolde()const{
 vector<Titre*> PorteFeuille::getTitres()const{  
     return  titres;
 
+}
+int PorteFeuille::getQuantiteTitre(string nomAction)const
+{
+    return (titres[findTitreIndex(nomAction)]->getQtte());
 }

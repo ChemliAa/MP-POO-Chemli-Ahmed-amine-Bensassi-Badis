@@ -14,5 +14,7 @@ class Bourse{
     virtual vector<string> getActionsDisponiblesParDate(const Date&)=0;
     virtual vector<PrixJournalier> getPrixJournaliersParDate(const Date&)const =0;
     virtual vector<PrixJournalier> getPrixJournaliersParDateEtPrix(const Date& date,double soldeCourant)const =0;
+    virtual double getPrixParDateEtAction(const Date& date,string action)const =0;
+
 };
 #endif // BOURSE_H
