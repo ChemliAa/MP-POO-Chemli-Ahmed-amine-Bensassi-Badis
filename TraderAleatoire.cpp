@@ -4,6 +4,9 @@
 Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille& p){    
    Transaction t;
    typeTransaction choixTypeTransaction=static_cast<typeTransaction>(rand() % 3);
+   if(p.getTitres().size()==0){
+    choixTypeTransaction=buy;
+   }
     t.setType(choixTypeTransaction);
     vector<PrixJournalier> prixJournalierDisponible;
     int indexPrixJournalierToBuy,maxPurchasableStocks,qtteToBuy,stockToSell,quantityToSell;

@@ -59,6 +59,7 @@ double BourseVector::getPrixParDateEtAction(const Date& date,string action)const
         if(i->getDate()==date && i->getNomAction()==action)
             return i->getPrix();
     }
+    return -1;
 
 }
 double BourseVector::dernierPrixDuneAction(const Date& date,string action)const
