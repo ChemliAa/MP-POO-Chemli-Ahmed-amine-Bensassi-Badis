@@ -61,4 +61,18 @@ double BourseVector::getPrixParDateEtAction(const Date& date,string action)const
     }
 
 }
+double BourseVector::dernierPrixDuneAction(const Date& date,string action)const
+{   
+    Date dateLimite(date);
+    dateLimite++;
+    double dernierPrix=0;
+    if ((date<dateCourante) || (date==dateCourante))
+    {
+    for (Date d(historique[0].getDate()); d < dateLimite; d++)
+    {
+        dernierPrix=this->getPrixParDateEtAction(date,action);
+    }
+    }
+    return dernierPrix;
+}
 
