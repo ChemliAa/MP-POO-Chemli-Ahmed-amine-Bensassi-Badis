@@ -7,15 +7,15 @@ class Transaction{
     private:
     typeTransaction type;
     string nomAction;
-    double quantite; 
+    int quantite; 
     public:
     friend ostream& operator<< (ostream& flux,const Transaction& t );     
     typeTransaction getType()const;
     string getNomAction()const;
-    double getQuantite()const;
+    int getQuantite()const;
     void setType(typeTransaction t);
     void setNomAction(string nom);
-    void setQuantite(double q);
+    void setQuantite(int q);
 };
 
 #endif // TRANSACTION_H

@@ -8,7 +8,7 @@ string Transaction::getNomAction()const
 {
     return nomAction;
 }
-double Transaction::getQuantite()const
+int Transaction::getQuantite()const
 {
     return quantite;
 }
@@ -20,7 +20,7 @@ void Transaction::setNomAction(string nom)
 {
     nomAction=nom;
 }
-void Transaction::setQuantite(double q)
+void Transaction::setQuantite(int q)
 {
     quantite=q;
 }
