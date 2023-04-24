@@ -13,17 +13,20 @@ class  PorteFeuille
                                 // but i have doubts about choosing a vector,i made this choice because its an easy implementation of a 
                                 //dynamic structure, we might change this  choice when we dive into collections
         int findTitreIndex(string nomAction)const;
-
-    public:
-
-        PorteFeuille(double solde);
-        double getSolde()const;
-        vector<Titre*> getTitres()const;
         int getQuantiteTitre(string nomAction)const;
         void ajoutMontant(double montant);
         void retirerMontant(double montant);
         void ajoutTitre(Titre *titre);
         void suprimerTitre(string action);
+        void enleverAction(string action,int qtte);
+    public:
+
+        PorteFeuille(double solde);
+        double getSolde()const;
+        vector<Titre*> getTitres()const;
+        void acheter(string nomAction,int quantite,double prix );
+        void vendre(string nomAction,int quantite,double prix );
+        //acheter vendre
 };
 #endif
 

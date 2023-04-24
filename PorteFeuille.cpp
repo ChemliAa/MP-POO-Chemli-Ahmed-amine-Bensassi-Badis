@@ -58,3 +58,22 @@ int PorteFeuille::getQuantiteTitre(string nomAction)const
 {
     return (titres[findTitreIndex(nomAction)]->getQtte());
 }
+void PorteFeuille::enleverAction(string action,int qtte){
+    int indexAction=findTitreIndex(action);
+    if(qtte==titres[indexAction]->getQtte()){
+        suprimerTitre(action);
+    }
+    else{
+        titres[indexAction]->setQtte(titres[indexAction]->getQtte()-qtte);
+    }
+}
+void PorteFeuille::acheter(string nomAction,int quantite,double prix ){
+    retirerMontant(quantite*prix);
+    Titre t(nomAction,quantite);
+    ajoutTitre(&t);
+}
+ void PorteFeuille::vendre(string nomAction,int quantite,double prix )
+ {
+    ajoutMontant(quantite*prix);
+    enleverAction(nomAction,quantite);
+ }

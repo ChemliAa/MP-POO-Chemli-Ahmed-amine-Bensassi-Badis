@@ -12,7 +12,7 @@ vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
        { 
         if (date< i->getDate())//if the iterated date is greater than the searched date exit the loop       
             break;     
-        if (i->getDate()==date && i->getDate()<dateCourante)
+        if (i->getDate()==date && (i->getDate()<dateCourante || i->getDate()==dateCourante ))
         {
             ActionsDisponibles.push_back(i->getNomAction());
         }           
@@ -54,10 +54,13 @@ vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
  }
 double BourseVector::getPrixParDateEtAction(const Date& date,string action)const
 {
+    if ((date<dateCourante) || (date==dateCourante))
+    {
     for (auto i = historique.begin(); i != historique.end(); ++i)
     {
         if(i->getDate()==date && i->getNomAction()==action)
             return i->getPrix();
+    }
     }
     return -1;
 
@@ -66,7 +69,7 @@ double BourseVector::dernierPrixDuneAction(const Date& date,string action)const
 {   
     Date dateLimite(date);
     dateLimite++;
-    double dernierPrix=0;
+    double dernierPrix=-1;
     if ((date<dateCourante) || (date==dateCourante))
     {
     for (Date d(historique[0].getDate()); d < dateLimite; d++)
@@ -75,5 +78,9 @@ double BourseVector::dernierPrixDuneAction(const Date& date,string action)const
     }
     }
     return dernierPrix;
+}
+void BourseVector::setDateCourante(Date date)
+{
+    dateCourante=date;
 }
 
