@@ -26,6 +26,7 @@ class  PorteFeuille
         vector<Titre*> getTitres()const;
         void acheter(string nomAction,int quantite,double prix );
         void vendre(string nomAction,int quantite,double prix );
+        Titre getTitresbyActionName(string actionName);
         //acheter vendre
 };
 #endif

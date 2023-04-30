@@ -17,12 +17,19 @@ void PorteFeuille::ajoutMontant(double montant){
     }
 int PorteFeuille::findTitreIndex(string nomAction)const{
     int indexOfIndexToSearch= 0;
+ 
+    if(titres.size()!=0){
+    
+    }
     for (Titre* t : titres){
         if(t->getNomAction()==nomAction){
+              
             return indexOfIndexToSearch;
         }
+     
         indexOfIndexToSearch++;
     }
+        
     return -1;   
     }
 void PorteFeuille::suprimerTitre(string nomAction){
@@ -36,13 +43,14 @@ void PorteFeuille::suprimerTitre(string nomAction){
     return ;
     }
 void PorteFeuille::ajoutTitre(Titre* t){
+  
     if (findTitreIndex(t->getNomAction())==-1)
-    {
+    {   
         titres.push_back(t);
         return ;
     }
     else
-    {
+    {   
         titres[findTitreIndex(t->getNomAction())]->setQtte((titres[findTitreIndex(t->getNomAction())]->getQtte())+(t->getQtte()));
     }
     
@@ -69,11 +77,15 @@ void PorteFeuille::enleverAction(string action,int qtte){
 }
 void PorteFeuille::acheter(string nomAction,int quantite,double prix ){
     retirerMontant(quantite*prix);
-    Titre t(nomAction,quantite);
-    ajoutTitre(&t);
+    Titre *t=new Titre(nomAction,quantite); 
+    ajoutTitre(t);
 }
  void PorteFeuille::vendre(string nomAction,int quantite,double prix )
  {
     ajoutMontant(quantite*prix);
     enleverAction(nomAction,quantite);
  }
+Titre PorteFeuille::getTitresbyActionName(string actionName){
+return *titres[findTitreIndex(actionName)];
+
+}
