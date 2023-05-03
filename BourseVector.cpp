@@ -4,7 +4,7 @@ BourseVector::BourseVector(const Date& date,string path):Bourse(date)
     historique=PersistancePrixJournaliers::lirePrixJournaliersDUnFichier(path);
 };
 
-vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date)const{
+vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
     vector<string> ActionsDisponibles;
      if (historique[historique.size()-1].getDate()<date)//if the searched date is greater than the upper bound of the vector return empty vector (out of search range)       
             return ActionsDisponibles;   
@@ -74,8 +74,9 @@ double BourseVector::dernierPrixDuneAction(const Date& date,string action)const
     {
     for (Date d(historique[0].getDate()); d < dateLimite; d++)
     {   
-        if (getPrixParDateEtAction(date,action)!=-1)
-            dernierPrix=this->getPrixParDateEtAction(date,action); /*Before it used to be that when date doesn't exist in the cvs the value updates to -1 which shouldn't happen , now it's fixed*/
+        double temp=this->getPrixParDateEtAction(date,action);
+        if(temp!=-1)
+            dernierPrix=temp;
     }
     }
     return dernierPrix;
@@ -84,20 +85,4 @@ void BourseVector::setDateCourante(Date date)
 {
     dateCourante=date;
 }
-bool BourseVector::isActionDisponibleParDate(const Date& date,string action)const 
-{
-    vector<string> actionsDisponibles=getActionsDisponiblesParDate(date);
-    bool actionDisponible=false;
-    for (auto actiondisp :actionsDisponibles)
-    {
-       if (actiondisp==action)
-       {
-        actionDisponible=true;
-       }
-       
-    }
-    
-    return actionDisponible;
-}
-
 

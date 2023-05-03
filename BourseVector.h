@@ -10,12 +10,11 @@ private:
     vector<PrixJournalier> historique;
 public:
     BourseVector(const Date& date,string path=CHEMIN);
-    vector<string> getActionsDisponiblesParDate(const Date& date)const override;
+    vector<string> getActionsDisponiblesParDate(const Date& date)override;
     vector<PrixJournalier> getPrixJournaliersParDate(const Date& date)const override;
     vector<PrixJournalier> getPrixJournaliersParDateEtPrix(const Date& date,double prix)const override;
     double getPrixParDateEtAction(const Date& date,string action)const override ;
     double dernierPrixDuneAction(const Date& date,string action)const override;
     void setDateCourante(Date date)override;
-    bool isActionDisponibleParDate(const Date& date,string action)const override;
 };
 #endif
