@@ -71,6 +71,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
 }
 
 int main(){
+    srand(time(NULL));
     TraderAleatoire t;
     Date datecourant("4/1/2010");
     Date fin("5/1/2011");
