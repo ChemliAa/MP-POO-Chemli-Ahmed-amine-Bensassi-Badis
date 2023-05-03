@@ -30,7 +30,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
                 totalNumberOfTransactions++;
                
                 if (t.getType()==buy){   
-                    if(bourse.getPrixParDateEtAction(dateCourante,t.getNomAction()) * t.getQuantite() > porteFeuille.getSolde()){
+                    if(bourse.isActionDisponibleParDate(dateCourante,t.getNomAction())==false||bourse.getPrixParDateEtAction(dateCourante,t.getNomAction()) * t.getQuantite() > porteFeuille.getSolde()){
                       totalNumberOfNonAcceptedTransactions++;
                 }
                 else{
@@ -43,7 +43,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
                         totalNumberOfNonAcceptedTransactions++;
                 }
                     else{
-                        porteFeuille.vendre(t.getNomAction(),t.getQuantite(),bourse.getPrixParDateEtAction(dateCourante,t.getNomAction()));
+                        porteFeuille.vendre(t.getNomAction(),t.getQuantite(),bourse.dernierPrixDuneAction(dateCourante,t.getNomAction()));//can sell something unavailable that day in the bourse but needs its last seen price to sell it with 
                         totalNumberOfSellTransaction++;
                     }
                 }
@@ -78,12 +78,12 @@ int main(){
     BourseVector b(datecourant,CHEMIN);
     map<string,long> stats ;
     stats=Simulation::executer(b,t,datecourant,fin,1000);
-    cout<<"simulation terminer voici les statistiques: "<<endl;
-    cout<<"nombre total des transaction: "<<stats["TotalTx"]<<endl;
-    cout<<"nombre total des transaction de type achat : "<<stats["TotalBuyTx"]<<endl;
-    cout<<"nombre total des transaction de type vente : "<<stats["TotalSellTx"]<<endl;
-    cout<<"nombre total des transaction de type rien faire : "<<stats["TotalHoldTx"]<<endl;
-    cout<<"nombre total des transaction non accepte : "<<stats["TotalFalseTX"]<<endl;
+   cout<<"simulation terminer voici les statistiques: "<<endl;
+    cout<<"nombre total des transactions: "<<stats["TotalTx"]<<endl;
+    cout<<"nombre total des transactions de type achat : "<<stats["TotalBuyTx"]<<endl;
+    cout<<"nombre total des transactions de type vente : "<<stats["TotalSellTx"]<<endl;
+    cout<<"nombre total des transactions de type rien faire : "<<stats["TotalHoldTx"]<<endl;
+    cout<<"nombre total des transactions non acceptees : "<<stats["TotalFalseTX"]<<endl;
     cout<<"solde final : "<<stats["Solde"]<<endl;
  
 
