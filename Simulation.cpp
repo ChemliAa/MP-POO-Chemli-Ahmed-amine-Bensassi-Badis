@@ -39,7 +39,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
                     }
                 }
                 else if (t.getType()==sell){   
-                    if(porteFeuille.getTitresbyActionName(t.getNomAction()).getQtte() < t.getQuantite()){
+                    if(prixActionAdateCourante==-1||porteFeuille.getTitresbyActionName(t.getNomAction()).getQtte() < t.getQuantite()){
                         totalNumberOfNonAcceptedTransactions++;
                 }
                     else{
@@ -59,7 +59,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
     double finalBalance=porteFeuille.getSolde();
         for ( auto t:porteFeuille.getTitres())
         {
-            finalBalance+=bourse.dernierPrixDuneAction(dateFin,t->getNomAction());
+            finalBalance+=bourse.dernierPrixDuneAction(dateFin,t->getNomAction())*t->getQtte();
         }
     stats["TotalTx"]=totalNumberOfTransactions;
     stats["TotalBuyTx"]=totalNumberOfBuyTransaction;
