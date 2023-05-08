@@ -7,7 +7,7 @@ int main(){
 
 
     Date dateFinDeRecherche("20/10/2015");
-    Date d1("10/05/2010");
+    Date d1("04/01/2010");
     bool conditionDateFin=true;
     BourseVector bourse(dateFinDeRecherche);
     vector<PrixJournalier> PrixJournaliertoOuput=bourse.getPrixJournaliersParDate(d1);
@@ -44,5 +44,6 @@ int main(){
     else {
         cout<<"extraction of 'prix journalier' before a given date and being below a price range  [failed]"<<endl;
     }
-    
+  cout<<nomActiontoOuput.size()<<endl;
+  cout<<PrixJournaliertoOuput.size()<<endl;
 }
