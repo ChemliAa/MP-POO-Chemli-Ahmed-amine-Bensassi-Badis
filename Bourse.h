@@ -1,6 +1,7 @@
 #if !defined(BOURSE_H)
 #define BOURSE_H
 #include <vector>
+#include <set>
 #include "PrixJournalier.h"
 #include "PersistancePrixJournaliers.h"
 #include "Date.h"
