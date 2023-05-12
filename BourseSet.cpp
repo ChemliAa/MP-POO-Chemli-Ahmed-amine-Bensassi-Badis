@@ -46,7 +46,7 @@ vector<PrixJournalier> BourseSet::getPrixJournaliersParDateEtPrix(const Date& da
     vector<PrixJournalier> PrixJournaliersDansDate;
      if (date<historique.begin()->getDate()||historique.rbegin()->getDate()<date || (dateCourante<date))//if the searched date is lower/greater than the upper bound of the set or wants to see into the future return empty vector (out of search range)       
             return PrixJournaliersDansDate;   
-    PrixJournalier pj1(date,prix);
+    PrixJournalier pj1(date);
     auto it1 = historique.lower_bound(pj1);
     if (it1!=historique.end())
     {
@@ -56,4 +56,9 @@ vector<PrixJournalier> BourseSet::getPrixJournaliersParDateEtPrix(const Date& da
         } 
     }
     return PrixJournaliersDansDate;       
+}
+
+
+double  BourseSet::getPrixParDateEtAction(const Date& date,string action)const{
+
 }
