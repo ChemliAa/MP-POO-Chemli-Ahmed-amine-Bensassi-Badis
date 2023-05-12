@@ -18,5 +18,5 @@ bool operator<(const PrixJournalier& pj1,const PrixJournalier& pj2)
 {
 	if (!(pj1.date==pj2.date)) return (pj1.date<pj2.date); 
 	if (!(pj1.nomAction==pj2.nomAction)) return (pj1.nomAction<pj2.nomAction); 
-	return (pj1.prix<pj2.prix); 
+	return (false); 
 }
