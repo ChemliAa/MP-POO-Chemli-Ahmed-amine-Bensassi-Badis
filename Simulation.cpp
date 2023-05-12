@@ -19,7 +19,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
     int totalNumberOfHoldTransaction=0;
     int nbrDeTransactionsEffectuesAjourdhui=0;
     int nbrGetActionsDisponiblesParDate=0;
-    int nbrGetPrixParDateEtActione=0;
+    int nbrGetPrixParDateEtAction=0;
 
 
 
@@ -35,25 +35,43 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
         nbrDeTransactionsEffectuesAjourdhui=0;
         do
             {   
+                auto start = chrono::high_resolution_clock::now();
                 t=trader.choisirDecision(bourse,porteFeuille);
+                auto stop = chrono::high_resolution_clock::now();
+                auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+                stats["TEMPS_TX_µs"]+=duration.count();
                 nbrDeTransactionsEffectuesAjourdhui++;
                 totalNumberOfTransactions++;
-                double prixActionAdateCourante=bourse.getPrixParDateEtAction(dateCourante,t.getNomAction());
-                nbrGetPrixParDateEtActione++;
                 if (t.getType()==buy){   
-                    if(prixActionAdateCourante==-1||prixActionAdateCourante * t.getQuantite() > porteFeuille.getSolde()){
+                    auto start = chrono::high_resolution_clock::now();
+                    double prixActionAdateCourante=bourse.getPrixParDateEtAction(dateCourante,t.getNomAction());
+                    auto stop = chrono::high_resolution_clock::now();
+                    auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+                    stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_µs"]+=duration.count();
+                    nbrGetPrixParDateEtAction++;
+                    if(prixActionAdateCourante==-1||prixActionAdateCourante * t.getQuantite() > porteFeuille.getSolde())
+                    {
                       totalNumberOfNonAcceptedTransactions++;
-                }
-                else{
+                    }
+                else
+                    {
                     porteFeuille.acheter(t.getNomAction(),t.getQuantite(),prixActionAdateCourante);
                     totalNumberOfBuyTransaction++;
                     }
                 }
                 else if (t.getType()==sell){   
-                    if(prixActionAdateCourante==-1||porteFeuille.getTitresbyActionName(t.getNomAction()).getQtte() < t.getQuantite()){
+                    auto start = chrono::high_resolution_clock::now();
+                    double prixActionAdateCourante=bourse.getPrixParDateEtAction(dateCourante,t.getNomAction());
+                    auto stop = chrono::high_resolution_clock::now();
+                    auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+                    stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_µs"]+=duration.count();
+                    nbrGetPrixParDateEtAction++;
+                    if(prixActionAdateCourante==-1||porteFeuille.getTitresbyActionName(t.getNomAction()).getQtte() < t.getQuantite())
+                    {
                         totalNumberOfNonAcceptedTransactions++;
-                }
-                    else{
+                    }
+                    else
+                    {
                         porteFeuille.vendre(t.getNomAction(),t.getQuantite(),prixActionAdateCourante);
                         totalNumberOfSellTransaction++;
                     }
@@ -85,11 +103,17 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
     stats["TotalSellTx"]=totalNumberOfSellTransaction;
     stats["TotalHoldTx"]=totalNumberOfHoldTransaction;
     stats["TotalFalseTX"]=totalNumberOfNonAcceptedTransactions;
-    stats["Solde"]=finalBalance; 
+    stats["Solde"]=finalBalance;
+    stats["Gains"]=finalBalance-solde;
+    stats["PourcentageGains"]=((finalBalance-solde)/solde)*100; 
     stats["nbrGetActionsDisponiblesParDate"]=nbrGetActionsDisponiblesParDate;
-    stats["nbrGetPrixParDateEtActione"]=nbrGetPrixParDateEtActione;
+    stats["nbrGetPrixParDateEtAction"]=nbrGetPrixParDateEtAction;
     stats["TEMPS_GET_ACTIONS_DISPO_PAR_DATE_TOTAL_µs"]=stats["TEMPS_GET_ACTIONS_DISPO_PAR_DATE_µs"];
     stats["TEMPS_GET_ACTIONS_DISPO_PAR_DATE_µs"]/=nbrGetActionsDisponiblesParDate;
+    stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_TOTAL_µs"]=stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_µs"];
+    stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_µs"]/=nbrGetPrixParDateEtAction;
+    stats["TEMPS_TOTAL_TX_µs"]=stats["TEMPS_TX_µs"];
+    stats["TEMPS_TX_µs"]/=totalNumberOfTransactions;
     return stats;
 }
 
@@ -102,19 +126,23 @@ int main(){
     BourseVector b(datecourant,CHEMIN);
     map<string,long> stats ;
     stats=Simulation::executer(b,t,datecourant,fin,1000);
-    cout<<"simulation terminer voici les statistiques: "<<endl;
-    cout<<"nombre total des transaction: "<<stats["TotalTx"]<<endl;
-    cout<<"nombre total des transaction de type achat : "<<stats["TotalBuyTx"]<<endl;
-    cout<<"nombre total des transaction de type vente : "<<stats["TotalSellTx"]<<endl;
-    cout<<"nombre total des transaction de type rien faire : "<<stats["TotalHoldTx"]<<endl;
-    cout<<"nombre total des transaction non accepte : "<<stats["TotalFalseTX"]<<endl;
-    cout<<"solde final : "<<stats["Solde"]<<endl;
-    cout<<"nombre d'utilisations de getActionsDisponiblesParDate : "<<stats["nbrGetActionsDisponiblesParDate"]<<endl;
-    cout<<"nombre d'utilisations de getPrixParDateEtActione : "<<stats["nbrGetPrixParDateEtActione"]<<endl;
+    cout<<"Simulation terminee voici les statistiques: "<<endl;
+    cout<<"Nombre total des transactions: "<<stats["TotalTx"]<<endl;
+    cout<<"Nombre total des transactions de type achat : "<<stats["TotalBuyTx"]<<endl;
+    cout<<"Nombre total des transactions de type vente : "<<stats["TotalSellTx"]<<endl;
+    cout<<"Nombre total des transactions de type rien faire : "<<stats["TotalHoldTx"]<<endl;
+    cout<<"Nombre total des transactions non accepte : "<<stats["TotalFalseTX"]<<endl;
+    cout<<"Solde final : "<<stats["Solde"]<<endl;
+    cout<<"Gains : "<<stats["Gains"]<<endl;
+    cout<<"Pourcentage Gains : "<<stats["PourcentageGains"]<<"%"<<endl;
+    cout<<"Nombre d'utilisations de getActionsDisponiblesParDate : "<<stats["nbrGetActionsDisponiblesParDate"]<<endl;
+    cout<<"Nombre d'utilisations de getPrixParDateEtAction : "<<stats["nbrGetPrixParDateEtAction"]<<endl;
     cout<<"Duree totale d'utilisation de getActionsDisponiblesParDate en micro secondes: "<<stats["TEMPS_GET_ACTIONS_DISPO_PAR_DATE_µs"]<<" micro secondes"<<endl;
-    cout<<"Duree Moyenne d'utilisation de getActionsDisponiblesParDate en micro secondes: "<<stats["TEMPS_GET_ACTIONS_DISPO_PAR_DATE_TOTAL_µs"]<<" micro secondes"<<endl;
-
- 
+    cout<<"Duree moyenne d'utilisation de getActionsDisponiblesParDate en micro secondes: "<<stats["TEMPS_GET_ACTIONS_DISPO_PAR_DATE_TOTAL_µs"]<<" micro secondes"<<endl;
+    cout<<"Duree totale d'utilisation de getPrixParDateEtAction en micro secondes: "<<stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_µs"]<<" micro secondes"<<endl;
+    cout<<"Duree moyenne d'utilisation de getPrixParDateEtAction en micro secondes: "<<stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_TOTAL_µs"]<<" micro secondes"<<endl;
+    cout<<"Duree totale de transactions: "<<stats["TEMPS_TOTAL_TX_µs"]<<" micro secondes"<<endl;
+    cout<<"Duree moyenne de transactions:"<<stats["TEMPS_TX_µs"]<<" micro secondes"<<endl;
 
     
 }
