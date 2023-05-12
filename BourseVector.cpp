@@ -81,8 +81,4 @@ double BourseVector::dernierPrixDuneAction(const Date& date,string action)const
     }
     return dernierPrix;
 }
-void BourseVector::setDateCourante(Date date)
-{
-    dateCourante=date;
-}
 

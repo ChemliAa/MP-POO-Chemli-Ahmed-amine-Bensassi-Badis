@@ -48,11 +48,10 @@ vector<PrixJournalier> BourseSet::getPrixJournaliersParDateEtPrix(const Date& da
             return PrixJournaliersDansDate;   
     PrixJournalier pj1(date,prix);
     auto it1 = historique.lower_bound(pj1);
-    PrixJournalier pj1(date,prix);
-    auto it2 = historique.upper_bound(pj1);
     if (it1!=historique.end())
     {
-        for (auto it = it1; it !=it2; ++it) {
+        for (auto it = it1; it !=historique.end(); ++it) {
+            if(date<it->getDate()||prix<it->getPrix())break;
             PrixJournaliersDansDate.push_back(*it);
         } 
     }
