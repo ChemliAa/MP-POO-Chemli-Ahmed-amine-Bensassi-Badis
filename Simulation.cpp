@@ -125,8 +125,8 @@ int main(){
     Date datecourant("4/1/2010");
     Date fin("5/1/2011");
     PorteFeuille p(10);
-    BourseVector b(datecourant,CHEMIN);
-   // BourseSet b(datecourant,CHEMIN);
+    //BourseVector b(datecourant,CHEMIN);
+    BourseSet b(datecourant,CHEMIN);
     map<string,long> stats ;
     stats=Simulation::executer(b,t,datecourant,fin,1000);
     cout<<"Simulation terminee voici les statistiques: "<<endl;
@@ -140,12 +140,13 @@ int main(){
     cout<<"Pourcentage Gains : "<<stats["PourcentageGains"]<<"%"<<endl;
     cout<<"Nombre d'utilisations de getActionsDisponiblesParDate : "<<stats["nbrGetActionsDisponiblesParDate"]<<endl;
     cout<<"Nombre d'utilisations de getPrixParDateEtAction : "<<stats["nbrGetPrixParDateEtAction"]<<endl;
-    cout<<"Duree totale d'utilisation de getActionsDisponiblesParDate en micro secondes: "<<stats["TEMPS_GET_ACTIONS_DISPO_PAR_DATE_µs"]<<" micro secondes"<<endl;
-    cout<<"Duree moyenne d'utilisation de getActionsDisponiblesParDate en micro secondes: "<<stats["TEMPS_GET_ACTIONS_DISPO_PAR_DATE_TOTAL_µs"]<<" micro secondes"<<endl;
-    cout<<"Duree totale d'utilisation de getPrixParDateEtAction en micro secondes: "<<stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_µs"]<<" micro secondes"<<endl;
-    cout<<"Duree moyenne d'utilisation de getPrixParDateEtAction en micro secondes: "<<stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_TOTAL_µs"]<<" micro secondes"<<endl;
+    cout<<"Duree totale d'utilisation de getActionsDisponiblesParDate en micro secondes: "<<stats["TEMPS_GET_ACTIONS_DISPO_PAR_DATE_TOTAL_µs"]<<" micro secondes"<<endl;
+    cout<<"Duree moyenne d'utilisation de getActionsDisponiblesParDate en micro secondes: "<<stats["TEMPS_GET_ACTIONS_DISPO_PAR_DATE_µs"]<<" micro secondes"<<endl;
+    cout<<"Duree totale d'utilisation de getPrixParDateEtAction en micro secondes: "<<stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_TOTAL_µs"]<<" micro secondes"<<endl;
+    cout<<"Duree moyenne d'utilisation de getPrixParDateEtAction en micro secondes: "<<stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_µs"]<<" micro secondes"<<endl;
     cout<<"Duree totale de transactions: "<<stats["TEMPS_TOTAL_TX_µs"]<<" micro secondes"<<endl;
     cout<<"Duree moyenne de transactions:"<<stats["TEMPS_TX_µs"]<<" micro secondes"<<endl;
+
 
     
 }

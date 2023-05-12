@@ -2,6 +2,7 @@
 BourseVector::BourseVector(const Date& date,string path):Bourse(date)
 {
     historique=PersistancePrixJournaliers::lirePrixJournaliersDUnFichier(path);
+
 };
 
 vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
@@ -36,8 +37,7 @@ vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
  }
  vector<PrixJournalier> BourseVector::getPrixJournaliersParDateEtPrix(const Date& date,double soldeCourant)const{
     vector<PrixJournalier> PrixJournaliersDansDate;
-    
-    if (historique[historique.size()-1].getDate()<date)//if the searched date is greater than the upper bound of the vector return empty vector (out of search range)       
+    if (date<historique[0].getDate()||historique[historique.size()-1].getDate()<date || (dateCourante<date))//if the searched date is greater than the upper bound of the vector return empty vector (out of search range)       
             return PrixJournaliersDansDate;  
     for (auto i = historique.begin(); i != historique.end(); ++i)
         {   
@@ -45,8 +45,9 @@ vector<string> BourseVector::getActionsDisponiblesParDate(const Date& date){
             
             break; 
         }
-        if (i->getDate()==date && (i->getDate()<dateCourante || i->getDate()==dateCourante) && soldeCourant>i->getPrix())
-        {    
+        if (i->getDate()==date  && soldeCourant>i->getPrix())
+        {   
+            
             PrixJournaliersDansDate.push_back(*i);
         }
         }
