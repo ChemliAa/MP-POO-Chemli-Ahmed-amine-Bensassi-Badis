@@ -15,6 +15,5 @@ public:
     vector<PrixJournalier> getPrixJournaliersParDateEtPrix(const Date& date,double prix)const override;
     double getPrixParDateEtAction(const Date& date,string action)const override ;
     double dernierPrixDuneAction(const Date& date,string action)const override;
-    void setDateCourante(Date date)override;
 };
 #endif

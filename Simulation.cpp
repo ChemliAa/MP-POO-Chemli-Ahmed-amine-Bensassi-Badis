@@ -1,10 +1,12 @@
 #include "Simulation.h"
 #include <cmath>
 #include "TraderAleatoire.h"
+#include "BourseSet.h"
 #include "./customExceptions/TransactionUnknown.cpp"
 #include<map>
 #include<chrono>
 #include<iostream>
+
 map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateDebut, Date dateFin, double solde)
 {   map<string, long> stats;
     
@@ -118,12 +120,13 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
 }
 
 int main(){
-    srand(time(NULL));
+    srand(1);
     TraderAleatoire t;
     Date datecourant("4/1/2010");
     Date fin("5/1/2011");
     PorteFeuille p(10);
     BourseVector b(datecourant,CHEMIN);
+   // BourseSet b(datecourant,CHEMIN);
     map<string,long> stats ;
     stats=Simulation::executer(b,t,datecourant,fin,1000);
     cout<<"Simulation terminee voici les statistiques: "<<endl;

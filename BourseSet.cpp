@@ -60,5 +60,29 @@ vector<PrixJournalier> BourseSet::getPrixJournaliersParDateEtPrix(const Date& da
 
 
 double  BourseSet::getPrixParDateEtAction(const Date& date,string action)const{
+    if (date<historique.begin()->getDate()||historique.rbegin()->getDate()<date || (dateCourante<date))//if the searched date is lower/greater than the upper bound of the set or wants to see into the future return empty vector (out of search range)       
+            return -1;   
+    auto it=historique.find(PrixJournalier (date,action));
+    if (it!=historique.end())
+    {
+        return it->getPrix();
+    }
+    else {return -1;}
+}
+double BourseSet::dernierPrixDuneAction(const Date& date,string action)const{
+    if (date<historique.begin()->getDate()||historique.rbegin()->getDate()<date || (dateCourante<date))//if the searched date is lower/greater than the upper bound of the set or wants to see into the future return empty vector (out of search range)       
+            return -1;  
+    double dernierPrix=-1;
+    Date dateLimite(date);
+    dateLimite++;
+    for (Date d(historique.begin()->getDate()); d < dateLimite; d++)
+    {
+         auto it=historique.find(PrixJournalier (d,action));
+         if (it!=historique.end())
+        {
+            dernierPrix= it->getPrix();
+        }
+    }
+    return dernierPrix;
 
 }
