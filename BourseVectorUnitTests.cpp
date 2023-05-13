@@ -1,12 +1,13 @@
 #include "PrixJournalier.h"
 #include "BourseVector.h"
 #include "Date.h"     
+#include "BourseMap.h"
 using namespace std;
 
 int main(){
 
 
-    Date dateFinDeRecherche("20/10/2015");
+    Date dateFinDeRecherche("20/10/2011");
     Date d1("04/01/2010");
     bool conditionDateFin=true;
     BourseVector bourse(dateFinDeRecherche);
@@ -46,4 +47,9 @@ int main(){
     }
   cout<<nomActiontoOuput.size()<<endl;
   cout<<PrixJournaliertoOuput.size()<<endl;
+
+BourseMap bourseMapTesting(dateCourante);
+map<Date,set<PrixJournalier>> h=bourseMapTesting.getHistorique();
+cout<<"size of extractop: "<<h.size()<<endl;
+
 }
