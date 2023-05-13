@@ -5,8 +5,11 @@
 #include "Trader.h"
 #include "PorteFeuille.h"
 class TraderIntelligent:public Trader {
+    private:
+    typeTransaction phase; 
     public:
-      Transaction choisirDecision(const Bourse&,const PorteFeuille&);
+    TraderIntelligent():phase(sell){}
+    Transaction choisirDecision(const Bourse&,const PorteFeuille&);
     
 };
 #endif

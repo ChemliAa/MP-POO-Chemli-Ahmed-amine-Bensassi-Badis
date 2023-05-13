@@ -57,7 +57,6 @@ vector<PrixJournalier> BourseSet::getPrixJournaliersParDateEtPrix(const Date& da
                 PrixJournaliersDansDate.push_back(*it);
         } 
     }
-        //cout<<date<<endl;
     return PrixJournaliersDansDate;       
 }
 

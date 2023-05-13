@@ -4,34 +4,78 @@
 Transaction TraderIntelligent::choisirDecision(const Bourse& b,const PorteFeuille& p){    
    Transaction t;
    vector<PrixJournalier> prixJournalierDisponible;
-    int indexPrixJournalierToBuy,maxPurchasableStocks,qtteToBuy,stockToSell,quantityToSell;   
-    if(p.getTitres().size()==0)
+    prixJournalierDisponible=b.getPrixJournaliersParDateEtPrix(b.getDateFinRech(),p.getSolde());
+    int indexPrixJournalierToBuy,maxPurchasableStocks,qtteToBuy,stockToSell,quantityToSell;  
+    if( prixJournalierDisponible.size()==0 )
+    {
+        t.setType(hold);
+        return t;
+    }
+    if(p.getTitres().size()<5 )
+
    {
     t.setType(buy);
-    prixJournalierDisponible=b.getPrixJournaliersParDateEtPrix(b.getDateFinRech(),p.getSolde());
-    prixJournalierDisponible=b.getPrixJournaliersParDateEtPrix(b.getDateFinRech(),p.getSolde());
-          
-             if(prixJournalierDisponible.size()==0){
+    indexPrixJournalierToBuy=rand() % prixJournalierDisponible.size();
+    t.setNomAction(prixJournalierDisponible[indexPrixJournalierToBuy].getNomAction()); 
+    maxPurchasableStocks=floor(p.getSolde()/prixJournalierDisponible[indexPrixJournalierToBuy].getPrix());
+    qtteToBuy=rand() % maxPurchasableStocks +1;
+    t.setQuantite(qtteToBuy);
+    return t;
+   }
+   else{
+    PrixJournalier prixJournalierWithMinimumPrice=*b.getPrixJournaliersParDate(b.getDateFinRech()).begin();
+    for (auto it:b.getPrixJournaliersParDate(b.getDateFinRech()))
+        {
+            if (it.getPrix()<prixJournalierWithMinimumPrice.getPrix())
+            {
+                 prixJournalierWithMinimumPrice=it;
+            }
+        
+        }
+
+    if (phase==sell && p.getTitres().size()!=0 )
+    {    
+        Titre titreAvecMaxPrix("",0);
+        for (auto it:p.getTitres())
+        {
+             if (b.dernierPrixDuneAction(b.getDateFinRech(),it->getNomAction())>b.getPrixParDateEtAction(b.getDateFinRech(),titreAvecMaxPrix.getNomAction()))
+            {
+                 titreAvecMaxPrix=*it;
+             }
+        
+         }
+        t.setType(sell);
+        t.setNomAction(titreAvecMaxPrix.getNomAction());
+        t.setQuantite(titreAvecMaxPrix.getQtte());
+        phase=buy;
+        return t;
+        
+    }
+    else if (phase==buy ){
+
+         if(prixJournalierDisponible.size()==0){
                         
                 t.setType(hold); //if theres nothing we can buy today,do nothing
-                return t;
+               phase=sell;
             }  
-            indexPrixJournalierToBuy=rand() % prixJournalierDisponible.size();
-          
-            t.setNomAction(prixJournalierDisponible[indexPrixJournalierToBuy].getNomAction());
-           
-            maxPurchasableStocks=floor(p.getSolde()/prixJournalierDisponible[indexPrixJournalierToBuy].getPrix());
-            if(maxPurchasableStocks !=0)
-                qtteToBuy=rand() % maxPurchasableStocks +1;
-            else{qtteToBuy=0;}
-             
-            t.setQuantite(qtteToBuy); //quantity should be and int not a double
-            return t;
+        else{
+            t.setType(buy);
+            t.setNomAction(prixJournalierWithMinimumPrice.getNomAction());
+            maxPurchasableStocks=floor(p.getSolde()/prixJournalierWithMinimumPrice.getPrix());
+            qtteToBuy=rand() % maxPurchasableStocks +1;
+            t.setQuantite(qtteToBuy);
+            phase=hold;
+        }
+        
+        return t;
+    }
+    else if(phase==hold)
+    {
+       phase=sell;
+       t.setType(hold); 
+       return t; 
+    }
    }
-   else 
-   {for (auto it:p.getTitres())
-   {
-    
-   }
-   }
-   }
+   t.setType(hold);
+   return t;
+}
