@@ -25,7 +25,7 @@ auto it=find_if(PrixJournalierVector.begin(),PrixJournalierVector.end(),[D](cons
 BourseMap::BourseMap(const Date& date,string path):Bourse(date)
 {    
     vector <PrixJournalier> historiqueVector=PersistancePrixJournaliers::lirePrixJournaliersDUnFichier(path);
-    for(Date dateCourante(date);dateCourante<historiqueVector.back().getDate();dateCourante++){
+    for(Date dateCourante(historiqueVector.front().getDate());dateCourante<historiqueVector.back().getDate();dateCourante++){
     
         historique.insert(make_pair(dateCourante,getPrixJournalierFromVectorGivenDate(historiqueVector,dateCourante)));
     }
@@ -33,11 +33,13 @@ BourseMap::BourseMap(const Date& date,string path):Bourse(date)
 
 
  vector<PrixJournalier>BourseMap::getPrixJournaliersParDate(const Date& date)const {
+   cout<<"here the error"<<date<<endl;
+   cout<<"this is hisotrique: "<<historique.count(date)<<endl;
    
     set<PrixJournalier> resultSet=historique.at(date);
-
+    cout<<"here"<<date<<endl;
     vector<PrixJournalier> resultPrixJournalier(resultSet.begin(),resultSet.end());
-
+ 
     return resultPrixJournalier;
  }
 
@@ -84,7 +86,7 @@ vector<string> BourseMap:: getActionsDisponiblesParDate(const Date& date) {
 
     vector<string> results;
     set<PrixJournalier> resultSet=historique.at(date);
-    vector<PrixJournalier> results;
+ 
     for (auto it=resultSet.begin();it!=resultSet.end();it++){
       
          results.push_back(it->getNomAction());
