@@ -6,6 +6,10 @@
 #include<map>
 #include<chrono>
 #include<iostream>
+#include"BourseMap.h"
+#include "BourseVector.h"    
+#include "BourseMap.h"
+#include "BourseMapToVector.h"
 
 map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateDebut, Date dateFin, double solde)
 {   map<string, long> stats;
@@ -26,6 +30,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
 
 
     for (Date dateCourante(dateDebut);dateCourante<dateLimite;dateCourante++){
+        cout<<dateCourante<<endl;
         bourse.setDateCourante(dateCourante);
         auto start = chrono::high_resolution_clock::now();
         if(bourse.getActionsDisponiblesParDate(dateCourante).size()!=0){ 
@@ -126,7 +131,7 @@ int main(){
     Date fin("5/1/2011");
     PorteFeuille p(10);
     //BourseVector b(datecourant,CHEMIN);
-    BourseSet b(datecourant,CHEMIN);
+    BourseMapToVector b(datecourant,CHEMIN);
     map<string,long> stats ;
     stats=Simulation::executer(b,t,datecourant,fin,1000);
     cout<<"Simulation terminee voici les statistiques: "<<endl;
