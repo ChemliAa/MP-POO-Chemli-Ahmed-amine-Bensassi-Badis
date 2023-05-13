@@ -11,24 +11,30 @@ Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille&
     vector<PrixJournalier> prixJournalierDisponible;
     int indexPrixJournalierToBuy,maxPurchasableStocks,qtteToBuy,stockToSell,quantityToSell;
     vector<Titre *> ownedTitres;
+    
     switch (choixTypeTransaction) {
         case buy: 
-
+            
             prixJournalierDisponible=b.getPrixJournaliersParDateEtPrix(b.getDateFinRech(),p.getSolde());
-          
              if(prixJournalierDisponible.size()==0){
                         
                 t.setType(hold); //if theres nothing we can buy today,do nothing
                 return t;
             }  
             indexPrixJournalierToBuy=rand() % prixJournalierDisponible.size();
-          
-            t.setNomAction(prixJournalierDisponible[indexPrixJournalierToBuy].getNomAction());
-           
-            maxPurchasableStocks=floor(p.getSolde()/prixJournalierDisponible[indexPrixJournalierToBuy].getPrix());
-            qtteToBuy=rand() % maxPurchasableStocks +1;
              
-            t.setQuantite(qtteToBuy); //quantity should be and int not a double
+            t.setNomAction(prixJournalierDisponible[indexPrixJournalierToBuy].getNomAction());
+             
+            maxPurchasableStocks=floor(p.getSolde()/prixJournalierDisponible[indexPrixJournalierToBuy].getPrix());
+            if(maxPurchasableStocks==0){
+         
+                t.setType(hold);
+                return t;
+            }
+            qtteToBuy=rand() % maxPurchasableStocks +1;
+              
+            t.setQuantite(qtteToBuy); 
+ 
             return t;
             break;
         case sell:

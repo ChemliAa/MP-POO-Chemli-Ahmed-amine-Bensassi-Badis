@@ -25,11 +25,14 @@ auto it=find_if(PrixJournalierVector.begin(),PrixJournalierVector.end(),[D](cons
 BourseMapToVector::BourseMapToVector(const Date& date,string path):Bourse(date)
 {    
     vector <PrixJournalier> historiqueVector=PersistancePrixJournaliers::lirePrixJournaliersDUnFichier(path);
-    for(Date dateCourante(historiqueVector.front().getDate());dateCourante<historiqueVector.back().getDate();dateCourante++){
+    Date limiteBound=historiqueVector.back().getDate();
+    limiteBound++;
+    for(Date dateCourante(historiqueVector.front().getDate());dateCourante<limiteBound;dateCourante++){
     
         historique.insert(make_pair(dateCourante,getPrixJournalierFromVectorGivenDate(historiqueVector,dateCourante)));
     }
- 
+    cout<<historique.size()<<endl;
+    cout<<historiqueVector.size()<<endl;
 };
 
 
@@ -39,17 +42,20 @@ BourseMapToVector::BourseMapToVector(const Date& date,string path):Bourse(date)
  }
 
  vector<PrixJournalier>BourseMapToVector::getPrixJournaliersParDateEtPrix(const Date& date,double prix)const {
+  
     vector<PrixJournalier> results=historique.at(date);
     for (auto p:results){
         if(p.getPrix()<=prix){
             results.push_back(p);
         }
     }
+ 
     return results;
  }
 double BourseMapToVector::getPrixParDateEtAction(const Date& date,string action)const{
  
     vector<PrixJournalier> results=historique.at(date);
+ 
       for (auto p:results){
         if(p.getNomAction()==action){
             return p.getPrix();
@@ -78,15 +84,12 @@ double BourseMapToVector::getPrixParDateEtAction(const Date& date,string action)
 }
     
 vector<string> BourseMapToVector:: getActionsDisponiblesParDate(const Date& date) {
-
     vector<string> results;
- 
     vector<PrixJournalier> resultVect=historique.at(date);
- 
- 
     for(auto p: resultVect){
         results.push_back(p.getNomAction());
     }
+    
     return results;
  }
         
