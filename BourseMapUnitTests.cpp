@@ -2,20 +2,22 @@
 #include "BourseVector.h"
 #include "Date.h"     
 #include "BourseMap.h"
+#include "BourseMapToVector.h"
 using namespace std;
 
 int main(){
 
 
-    Date dateFinDeRecherche("20/10/2011");
+    Date dateFinDeRecherche("14/1/2010");
     Date d1("04/01/2010");
     bool conditionDateFin=true;
     cout<<"preparing a bourse map"<<endl;
-    BourseMap bourse(dateFinDeRecherche);
+    BourseMapToVector bourse(dateFinDeRecherche);
      cout<<"Prepared"<<endl;
     vector<PrixJournalier> PrixJournaliertoOuput=bourse.getPrixJournaliersParDate(d1);
     vector<string> nomActiontoOuput=bourse.getActionsDisponiblesParDate(d1);
-
+    cout<<PrixJournaliertoOuput.size()<<endl;
+       cout<<nomActiontoOuput.size()<<endl;
     for (int i = 0; i < PrixJournaliertoOuput.size(); i++)
     {         
         if((dateFinDeRecherche<PrixJournaliertoOuput[i].getDate()) || (d1<PrixJournaliertoOuput[i].getDate())){
@@ -32,10 +34,9 @@ int main(){
         cout<<"extraction of 'prix journalier' before a given date [failed]"<<endl;
     }
    Date dateCourante("4/1/2010");
-   cout<<"preparing a bourse map2"<<endl;
-   BourseMap bourse2(dateCourante);
-   cout<<"boursemapPrepared"<<endl;
-   vector<PrixJournalier> PrixJournalierDisponible=bourse2.getPrixJournaliersParDateEtPrix(dateCourante,10);
+ 
+   vector<PrixJournalier> PrixJournalierDisponible=bourse.getPrixJournaliersParDateEtPrix(dateCourante,10);
+   cout<<PrixJournalierDisponible.size()<<endl;
    bool respectValidationConditions=true;
     for (int i = 0; i < PrixJournalierDisponible.size(); i++)
     {    Date stockDate=PrixJournalierDisponible[i].getDate();

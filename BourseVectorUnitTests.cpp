@@ -49,7 +49,7 @@ int main(){
   cout<<PrixJournaliertoOuput.size()<<endl;
 
 BourseMap bourseMapTesting(dateCourante);
-map<Date,set<PrixJournalier>> h=bourseMapTesting.getHistorique();
-cout<<"size of extractop: "<<h.size()<<endl;
+ 
+ 
 
 }
