@@ -24,7 +24,7 @@ Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille&
             indexPrixJournalierToBuy=rand() % prixJournalierDisponible.size();
              
             t.setNomAction(prixJournalierDisponible[indexPrixJournalierToBuy].getNomAction());
-             
+           
             maxPurchasableStocks=floor(p.getSolde()/prixJournalierDisponible[indexPrixJournalierToBuy].getPrix());
             if(maxPurchasableStocks==0){
          
@@ -34,7 +34,7 @@ Transaction TraderAleatoire::choisirDecision(const Bourse& b,const PorteFeuille&
             qtteToBuy=rand() % maxPurchasableStocks +1;
               
             t.setQuantite(qtteToBuy); 
- 
+             
             return t;
             break;
         case sell:

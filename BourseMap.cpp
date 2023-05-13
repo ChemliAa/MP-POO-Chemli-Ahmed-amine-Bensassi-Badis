@@ -33,11 +33,10 @@ BourseMap::BourseMap(const Date& date,string path):Bourse(date)
 
 
  vector<PrixJournalier>BourseMap::getPrixJournaliersParDate(const Date& date)const {
-   cout<<"here the error"<<date<<endl;
-   cout<<"this is hisotrique: "<<historique.count(date)<<endl;
+ 
    
     set<PrixJournalier> resultSet=historique.at(date);
-    cout<<"here"<<date<<endl;
+ 
     vector<PrixJournalier> resultPrixJournalier(resultSet.begin(),resultSet.end());
  
     return resultPrixJournalier;
