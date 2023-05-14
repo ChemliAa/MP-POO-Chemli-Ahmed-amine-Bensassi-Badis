@@ -2,6 +2,7 @@
 #include <cmath>
 #include "TraderAleatoire.h"
 #include "TraderIntelligent.h"
+#include "TraderAvare.h"
 #include "BourseSet.h"
 #include "./customExceptions/TransactionUnknown.cpp"
 #include<map>
@@ -11,6 +12,7 @@
 #include "BourseVector.h"    
 #include "BourseMap.h"
 #include "BourseMapToVector.h"
+
 
 map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateDebut, Date dateFin, double solde)
 {   map<string, long> stats;
@@ -50,6 +52,9 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
                 stats["TEMPS_TX_µs"]+=duration.count();
                 nbrDeTransactionsEffectuesAjourdhui++;
                 totalNumberOfTransactions++;
+                if(t.getQuantite()==0){
+                    t.setType(hold);
+                }
                 if (t.getType()==buy){   
                     auto start = chrono::high_resolution_clock::now();
                     double prixActionAdateCourante=bourse.getPrixParDateEtAction(dateCourante,t.getNomAction());
@@ -68,8 +73,10 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
                     }
                 }
                 else if (t.getType()==sell){   
+                    
                     auto start = chrono::high_resolution_clock::now();
                     double prixActionAdateCourante=bourse.getPrixParDateEtAction(dateCourante,t.getNomAction());
+
                     auto stop = chrono::high_resolution_clock::now();
                     auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
                     stats["TEMPS_GET_PRIX_PAR_DATE_ET_ACTION_µs"]+=duration.count();
@@ -81,6 +88,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
                     else
                     {
                         porteFeuille.vendre(t.getNomAction(),t.getQuantite(),bourse.getPrixParDateEtAction(dateCourante,t.getNomAction()));
+                    
                         totalNumberOfSellTransaction++;
                     }
                 }
@@ -127,7 +135,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
 
 int main(){
     srand(time(nullptr));
-    TraderIntelligent t;
+    TraderAvare t;
     Date datecourant("4/1/2010");
     Date fin("5/1/2011");
     PorteFeuille p(10);

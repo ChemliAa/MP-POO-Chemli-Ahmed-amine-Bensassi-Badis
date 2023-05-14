@@ -24,7 +24,7 @@ Transaction TraderAvare::choisirDecision(const Bourse& b,const PorteFeuille& p){
         t.setType(sell);
         t.setQuantite(qauntityToSell);
         t.setNomAction(possbileSellingAction);
-        totalPrice[possbileSellingAction]=0;
+        totalPrice.erase(possbileSellingAction);
         return t;
     }
     else if(PrixJournalierForToday.size()!=0){
