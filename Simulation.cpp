@@ -1,6 +1,7 @@
 #include "Simulation.h"
 #include <cmath>
 #include "TraderAleatoire.h"
+#include "TraderIntelligent.h"
 #include "BourseSet.h"
 #include "./customExceptions/TransactionUnknown.cpp"
 #include<map>
@@ -30,7 +31,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
 
 
     for (Date dateCourante(dateDebut);dateCourante<dateLimite;dateCourante++){
-        cout<<dateCourante<<endl;
+        
         bourse.setDateCourante(dateCourante);
         auto start = chrono::high_resolution_clock::now();
         if(bourse.getActionsDisponiblesParDate(dateCourante).size()!=0){ 
@@ -79,7 +80,7 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
                     }
                     else
                     {
-                        porteFeuille.vendre(t.getNomAction(),t.getQuantite(),prixActionAdateCourante);
+                        porteFeuille.vendre(t.getNomAction(),t.getQuantite(),bourse.getPrixParDateEtAction(dateCourante,t.getNomAction()));
                         totalNumberOfSellTransaction++;
                     }
                 }
@@ -125,13 +126,13 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
 }
 
 int main(){
-    srand(1);
-    TraderAleatoire t;
+    srand(time(nullptr));
+    TraderIntelligent t;
     Date datecourant("4/1/2010");
     Date fin("5/1/2011");
     PorteFeuille p(10);
     //BourseVector b(datecourant,CHEMIN);
-    BourseMapToVector b(datecourant,CHEMIN);
+    BourseSet b(datecourant,CHEMIN);
     map<string,long> stats ;
     stats=Simulation::executer(b,t,datecourant,fin,1000);
     cout<<"Simulation terminee voici les statistiques: "<<endl;
