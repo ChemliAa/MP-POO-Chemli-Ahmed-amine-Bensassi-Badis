@@ -133,13 +133,12 @@ map<string,long> Simulation::executer(Bourse& bourse, Trader& trader, Date dateD
     return stats;
 }
 
-int main(){
-    srand(time(nullptr));
-    TraderAvare t;
+/*int main(){
+    srand(1);
+    TraderAleatoire t;
     Date datecourant("4/1/2010");
-    Date fin("5/1/2015");
+    Date fin("3/2/2010");
     PorteFeuille p(10);
-    //BourseVector b(datecourant,CHEMIN);
     BourseSet b(datecourant,CHEMIN);
     map<string,long> stats ;
     stats=Simulation::executer(b,t,datecourant,fin,1000);
@@ -163,4 +162,4 @@ int main(){
 
 
     
-}
+}*/
