@@ -73,7 +73,7 @@ Transaction TraderMoyenne::choisirDecision(const Bourse& b,const PorteFeuille& p
      
       t.setNomAction(nomActionToSell);
       if(b.getPrixParDateEtAction(b.getDateFinRech(),nomActionToSell)==-1){
-         cout<<"iam a big afat"<<endl;
+        
          t.setType(hold);
          return t;
       }

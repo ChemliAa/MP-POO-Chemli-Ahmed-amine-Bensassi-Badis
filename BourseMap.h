@@ -6,9 +6,7 @@
 class  BourseMap:public Bourse
 {
 private:
-    map<Date,set<PrixJournalier>> historique;
-    set<PrixJournalier> getPrixJournalierFromVectorGivenDate(vector<PrixJournalier>,Date D)const;
-
+    multimap <Date,PrixJournalier> historique;
 public:
     BourseMap(const Date& date,string path=CHEMIN);
     vector<string> getActionsDisponiblesParDate(const Date& date)override;

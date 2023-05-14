@@ -1,96 +1,70 @@
 #include "BourseMap.h"
 #include <algorithm>
-
-set<PrixJournalier>BourseMap::getPrixJournalierFromVectorGivenDate(vector<PrixJournalier>PrixJournalierVector,Date D)const{
-set<PrixJournalier> setOfPrixJournalierFromSpecifiqueDate;
-auto it=find_if(PrixJournalierVector.begin(),PrixJournalierVector.end(),[D](const PrixJournalier& p){return p.getDate()==D;}); //lambda expression,kind off like an inline functions that 
-                                                                                                                              //takes the place of the == overide for this and only this find
-    if (it == PrixJournalierVector.end()) {
-    
-        return setOfPrixJournalierFromSpecifiqueDate;
-    }
- 
-     for (auto v = it; v != PrixJournalierVector.end() ; v++) {
-        if (v->getDate() == D) {
-            setOfPrixJournalierFromSpecifiqueDate.insert(*v);
-        }
-        else if(D<v->getDate()){
-       
-            break;
-        }
-     }
-   
-    return setOfPrixJournalierFromSpecifiqueDate;
-}
-BourseMap::BourseMap(const Date& date,string path):Bourse(date)
+ BourseMap::BourseMap(const Date& date,string path):Bourse(date)
 {    
     vector <PrixJournalier> historiqueVector=PersistancePrixJournaliers::lirePrixJournaliersDUnFichier(path);
-    for(Date dateCourante(historiqueVector.front().getDate());dateCourante<historiqueVector.back().getDate();dateCourante++){
-    
-        historique.insert(make_pair(dateCourante,getPrixJournalierFromVectorGivenDate(historiqueVector,dateCourante)));
+     
+        for(auto pr:historiqueVector){
+        PrixJournalier toInsert(pr.getDate(),pr.getNomAction(),pr.getPrix());
+        historique.insert(make_pair(pr.getDate(),toInsert));
+        }
     }
-};
-
-
  vector<PrixJournalier>BourseMap::getPrixJournaliersParDate(const Date& date)const {
- 
-   
-    set<PrixJournalier> resultSet=historique.at(date);
- 
-    vector<PrixJournalier> resultPrixJournalier(resultSet.begin(),resultSet.end());
+    vector<PrixJournalier> resultPrixJournalier;
+    auto range=historique.equal_range(date);
+    for(auto it=range.first;it!=range.second;it++){
+        resultPrixJournalier.push_back(it->second);
+    }
+
  
     return resultPrixJournalier;
  }
 
  vector<PrixJournalier>BourseMap::getPrixJournaliersParDateEtPrix(const Date& date,double prix)const {
-    set<PrixJournalier> resultSet=historique.at(date);
-    vector<PrixJournalier> results;
-    for (auto it=resultSet.begin();it!=resultSet.end();it++){
-        if(it->getPrix()<=prix){
-            results.push_back(*it);
-        }
-    }
-    return results;
+    vector<PrixJournalier> resultPrixJournalier;
+    auto range=historique.equal_range(date);
+    for(auto it=range.first;it!=range.second;it++){
+        if(it->second.getPrix()<prix)
+            resultPrixJournalier.push_back(it->second);
+    } 
+    return resultPrixJournalier;
  }
-double BourseMap:: getPrixParDateEtAction(const Date& date,string action)const{
-    PrixJournalier toFind(date,action,-1);
-    set<PrixJournalier> resultSet=historique.at(date);
-    auto it = resultSet.find(toFind);
 
-     if (it != resultSet.end()) {
-        return it->getPrix();
-     }
-     else return -1;
+double BourseMap:: getPrixParDateEtAction(const Date& date,string action)const{
+ 
+  auto range=historique.equal_range(date);
+    for(auto it=range.first;it!=range.second;it++){
+            if(it->second.getNomAction()==action)
+            return it->second.getPrix();
+    } 
+    return -1;
  }
  double BourseMap:: dernierPrixDuneAction(const Date& date,string action)const{
 
     if (date<historique.begin()->first ||historique.rbegin()->first<date || (dateCourante<date))//if the searched date is lower/greater than the upper bound of the set or wants to see into the future return empty vector (out of search range)       
             return -1;  
     double dernierPrix=-1;
+    double prixSpecifiqueAuneDate;
     Date dateLimite(date);
     dateLimite++;
-    for (Date d(historique.begin()->first); d < dateLimite; d++)
-    {    set<PrixJournalier> setAtDate=historique.at(d);
-         auto it=setAtDate.find(PrixJournalier (d,action));
-         if (it!=setAtDate.end())
-        {
-            dernierPrix= it->getPrix();
+     for (Date d(historique.begin()->first); d < dateLimite; d++){
+        prixSpecifiqueAuneDate=getPrixParDateEtAction(d,action);
+        if(prixSpecifiqueAuneDate!=-1){
+            dernierPrix=prixSpecifiqueAuneDate;
         }
-    }
+     }  
     return dernierPrix;
 
 }
     
 vector<string> BourseMap:: getActionsDisponiblesParDate(const Date& date) {
 
-    vector<string> results;
-    set<PrixJournalier> resultSet=historique.at(date);
- 
-    for (auto it=resultSet.begin();it!=resultSet.end();it++){
-      
-         results.push_back(it->getNomAction());
-     
+    vector<string> resultAction;
+    auto range=historique.equal_range(date);
+    for(auto it=range.first;it!=range.second;it++){
+        resultAction.push_back(it->second.getNomAction());
     }
-    return results;
+    return resultAction;
  }
+ 
         
