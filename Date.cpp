@@ -188,3 +188,30 @@ istream& operator>> (istream& flux, Date& dateToInput )
 	dateToInput.year=y;
 	return flux;
 }
+ 
+
+Date operator-- (Date& date,int)
+{	 
+  
+    date.day--;
+    if (date.day == 0) {
+        date.month--;
+        if (date.month == 0) {
+            date.year--;
+            date.month = 12;
+        }if((date.month==1)||(date.month==4)||(date.month==6)||(date.month==8)||(date.month==10)||(date.month==12)){
+        date.day =31;
+		}
+		else if ((date.month==2)||(date.month==5)||(date.month==7)||(date.month==9)||(date.month==11)){
+		date.day =30;
+		}
+		else if((date.month==3) && date.isLeapYear(date.year)){
+			date.day =29;
+		}
+		else if((date.month==3) && !date.isLeapYear(date.year)){
+			date.day =28;
+		}
+    }
+    return date;
+}
+ 

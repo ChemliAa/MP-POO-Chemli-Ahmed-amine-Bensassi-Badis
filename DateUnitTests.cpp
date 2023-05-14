@@ -202,10 +202,17 @@ int main()
     //given 2 correctly initiated dates where both have the same date, when compared,expect a correct boolean output 
     Date date5ToCompare(1,1,2010);
     Date date6Tocompare(1,1,2010);
+
+      for(Date d("1/1/2011");date6Tocompare<d;d--){
+         
+        cout<<d<<endl;
+    }
     if (date5ToCompare==date6Tocompare){
         cout<<"comparaison of dates using the '==' operator overload [passed] "<<endl;
     }
     else {
         cout<<"comparaison of dates using the '==' operator overload [failed]"<<endl;
     }
+   
 }
+ 

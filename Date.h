@@ -25,6 +25,7 @@ class Date{
 		friend ostream& operator<< (ostream& flux,const Date& dateToPrint );
 		friend istream& operator>> (istream& flux, Date& dateToInput );
 		friend Date operator++ (Date& date,int);
+		friend Date operator-- (Date& date,int);
 		friend bool  operator== (const Date& date1,const Date& date2);
 		friend bool operator<(const Date& date1,const Date& date2);
 		int getYear()const;
