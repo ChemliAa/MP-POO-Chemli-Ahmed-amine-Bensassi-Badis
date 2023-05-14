@@ -31,15 +31,25 @@ Transaction TraderAvare::choisirDecision(const Bourse& b,const PorteFeuille& p){
         string actionToBuy;
         actionToBuy=findCheapestAction(PrixJournalierForToday);
         double price =  b.getPrixParDateEtAction(b.getDateFinRech(),actionToBuy);
+     
+      
         int maxBuyable=floor(p.getSolde()/price);
         if(maxBuyable==0 || floor(maxBuyable/7)<1){
             t.setType(hold);
             return t;
-        }
+        } 
+  
         t.setType(buy);
         t.setNomAction(actionToBuy);
         t.setQuantite( floor(maxBuyable/7));
+        int curentValueSpent;
+        if (totalPrice.find(actionToBuy) != totalPrice.end()){
+            curentValueSpent=totalPrice[actionToBuy];
+            totalPrice.insert(make_pair(actionToBuy,floor(maxBuyable/7)*price+curentValueSpent));
+        }
+        else{
         totalPrice.insert(make_pair(actionToBuy,floor(maxBuyable/7)*price));
+        }
         return t;
     }
     t.setType(hold);

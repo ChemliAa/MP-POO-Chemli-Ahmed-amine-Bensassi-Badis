@@ -137,7 +137,7 @@ int main(){
     srand(time(nullptr));
     TraderAvare t;
     Date datecourant("4/1/2010");
-    Date fin("5/1/2011");
+    Date fin("5/1/2015");
     PorteFeuille p(10);
     //BourseVector b(datecourant,CHEMIN);
     BourseSet b(datecourant,CHEMIN);
