@@ -9,48 +9,79 @@
 #include<map>
 #include<chrono>
 #include<iostream>
-#include"BourseMap.h"
+#include"BourseMultiMap.h"
 #include "BourseVector.h"    
-#include "BourseMap.h"
 #include "BourseMapToVector.h"
 #include "Simulation.h"
 using namespace std;
+bool isNumeral(const string& str){
+    if(str.empty()){
+        return false; 
+    }
+    bool hasDigit=false;
+
+    bool hasDecimal=false;
+    for(char c:str){
+        if(isdigit(c)){
+            hasDigit=true;
+        }
+        else if(c=='.'&& !hasDecimal){
+            hasDecimal=true;
+        }
+        else {
+            return false;
+        }
+    }
+    return hasDigit; 
+}
 int main()
-{
-    double montant;
-    cout << "Entrez le solde initial du trader: ";
-    cin>>montant;
-    Date dateDebutSimulation("4/1/2010");
-    Date dateFinSimulation("4/1/2010");
+{   string m;
+    double montant=-1;
+    do{
+	cout << "Entrez le solde initial du trader(positif): ";
+    
+    cin>>m;
+	 
+	}while(!isNumeral(m) && !(atof(m.c_str())>0 ));
+    montant=atof(m.c_str());
+    
+    Date dateDebutSimulation("3/1/2010");
+    Date dateFinSimulation("31/12/2016");
+    Date dateLimDebut("4/1/2010");
+    Date dateLimFin("30/12/2016");
     string d;
-            while(true){
-                cout << "Entrez date debut (dd/mm/yyyy) simulation: ";
+            do{
+                cout << "Entrez date debut simulation (dd/mm/yyyy) entre 4/1/2010 et 30/12/2016 : ";
                 cin >> d;
                 try
                 {
                     dateDebutSimulation=Date(d);
-                    break;
+                    if(((dateLimDebut< dateDebutSimulation||dateLimDebut==dateDebutSimulation)&&(dateDebutSimulation<dateLimFin ||dateDebutSimulation==dateLimFin)))
+                        break;
                 }
                 catch(const std::exception& e)
                 {
                     std::cerr << e.what() << '\n';
                 }
                 
-            }
-            while(true){
-                cout << "Entrez date fin (dd/mm/yyyy) simulation: ";
+            }while (!((dateLimDebut< dateDebutSimulation||dateLimDebut==dateDebutSimulation)&&(dateDebutSimulation<dateLimFin ||dateDebutSimulation==dateLimFin)));
+            
+            
+            do{
+                cout << "Entrez date fin simulation (dd/mm/yyyy) entre "<<dateDebutSimulation<<" et 30/12/2016 : ";
                 cin >> d;
                 try
                 {
                     dateFinSimulation=Date(d);
-                    break;
+                    if(((dateDebutSimulation<dateFinSimulation ||dateDebutSimulation==dateFinSimulation)&&(dateFinSimulation<dateLimFin ||dateFinSimulation==dateLimFin)))
+                        break;
                 }
                 catch(const std::exception& e)
                 {
                     std::cerr << e.what() << '\n';
                 }
                 
-            }
+            }while(!((dateDebutSimulation<dateFinSimulation ||dateDebutSimulation==dateFinSimulation)&&(dateFinSimulation<dateLimFin ||dateFinSimulation==dateLimFin)));
     // display menu for bourse type selection
     cout << "Selectionnez type bourse:" << endl;
     cout << "1. Bourse Vecteur" << endl;
@@ -71,7 +102,7 @@ int main()
             cout<<"BourseVector created successfully"<<endl;
             break;
         case 3:
-            bourse=new BourseMap(dateDebutSimulation,CHEMIN);
+            bourse=new BourseMultiMap(dateDebutSimulation,CHEMIN);
             cout<<"BourseMultiMap created successfully"<<endl;
             break;
         case 4:

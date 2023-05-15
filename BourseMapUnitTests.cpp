@@ -1,7 +1,7 @@
 #include "PrixJournalier.h"
 #include "BourseVector.h"
 #include "Date.h"     
-#include "BourseMap.h"
+#include "BourseMultiMap.h"
 #include "BourseMapToVector.h"
 #include "BourseSet.h"
 using namespace std;
@@ -14,7 +14,7 @@ int main(){
     bool conditionDateFin=true;
  
     BourseSet bourse(dateFinDeRecherche,"mini.csv");
-    BourseMap bourse2(dateFinDeRecherche,"mini.csv");
+    BourseMultiMap bourse2(dateFinDeRecherche,"mini.csv");
     cout<<bourse.dernierPrixDuneAction(d1,"LVLT")<<endl;
     cout<<bourse2.dernierPrixDuneAction(d1,"LVLT")<<endl;
 
